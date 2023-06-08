@@ -1,4 +1,4 @@
-package day6.forEx;
+package day6.nestedloofEx;
 
 public class MultiplicationTableEx {
 

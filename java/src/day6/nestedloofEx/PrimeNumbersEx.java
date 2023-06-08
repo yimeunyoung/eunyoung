@@ -1,4 +1,4 @@
-package day6.practice;
+package day6.nestedloofEx;
 
 public class PrimeNumbersEx {
 
