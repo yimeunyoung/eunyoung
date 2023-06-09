@@ -46,14 +46,12 @@ public class DisjointEx {
 		}
 		
 		sc.close();
-		
+
+	//위의 while을
+	for( i = 1, gcd = 1 ; i <= num1 ; i++ ) {
+	if(num1 % i == 0 && num2 % i == 0) {
+			gcd =1; //로 써도 무관 
+		}
+	}
 	}
 }
-
-//위의 while을
-for( i = 1, gcd = 1 ; i <= num1 ; i++ ) {
-
-	if(num1 % i == 0 && num2 % i == 0) {
-			gcd =1; 로 써도 무관 
-	}
-	}
