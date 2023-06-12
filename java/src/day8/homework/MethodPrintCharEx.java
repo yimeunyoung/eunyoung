@@ -1,4 +1,4 @@
-package day8.practice;
+package day8.homework;
 
 public class MethodPrintCharEx {
 
