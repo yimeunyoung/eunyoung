@@ -10,17 +10,22 @@ public class MethodPrintCharEx {
 		 * ?????
 		 * ^^^^^^^
 		 * */
+		//1)
 		printString("*****");
+		//2)
 		printChar('*', 3);
 		System.out.println(); // 줄바꿈이 없기때문에 엔터를 밖에 쳐줘야함
+		//3)
 		printChar('*', 5, '\n');
+		
 		printChar('=',6,'\n');
 		
+		//별예시 다시 풀기
 		/*      *
 		 * 	   **
 		 *    ***
 		 *   ****
-		 *  *****  
+		 *  *****
 		 */
 		int num = 5;
 		for(int i = 1 ; i <= 5 ; i ++) {
@@ -31,6 +36,7 @@ public class MethodPrintCharEx {
 		}
 		
 	}
+	//1)
 	/**문자열이 주어지면 주어진 문자열을 출력하고 줄바꿈 하는 메서드
 	 * 매개변수 : 문자열 => String str
 	 * 리턴타입 : 없음 => void
@@ -39,6 +45,7 @@ public class MethodPrintCharEx {
 	public static void printString(String str) {
 		System.out.println(str);
 	}
+	//2)
 	/**문자와 개수가 주어지면 주어진 문자를 개수만큼 출력하는 메서드
 	 * 매개변수 : 문자와 개수 => char ch, int count
 	 * 리턴타입 : 없음 => void
@@ -49,6 +56,7 @@ public class MethodPrintCharEx {
 			System.out.print(ch);			
 		}
 	}
+	//3)
 	/**문자와 개수, 마지막 문자가 주어지면 주어진 문자를 개수만큼 출력하고 마지막 문자를 출력하는 메서드
 	 * 매개변수 : 문자와 개수, 마지막 문자 => char ch, int count, char lastCh
 	 * 리턴타입 : 출력된 문자열 => String // 원래는 void가 맞지만 응용 문제로 문자열을 리턴타입으로 넣음
@@ -61,7 +69,7 @@ public class MethodPrintCharEx {
 			System.out.print(ch);
 			str += ch;
 		}
-		System.out.println(lastCh);
+		System.out.print(lastCh);
 		str += lastCh;
 		return str;
 	}
