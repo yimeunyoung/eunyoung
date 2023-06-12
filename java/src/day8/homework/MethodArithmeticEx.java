@@ -1,4 +1,4 @@
-package day8.practice;
+package day8.homework;
 
 import java.util.Scanner;
 
@@ -78,6 +78,6 @@ public class MethodArithmeticEx {
 		default :
 			return 0.0;
 		}
-		// 위의 return 0.0; 을 defaul문 아래가 아닌 이 자리에 써도 무관
+		// 위의 return 0.0; 을 default문 아래가 아닌 이 자리에 써도 무관
 }
 }
