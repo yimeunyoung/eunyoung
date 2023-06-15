@@ -12,7 +12,7 @@ public class ArrayRandomEx2 {
 		boolean checkArr[] = new boolean[10];
 		
 		for(int i = 0 ; i < 3 ; ) {
-			int random = (int)(Math.random() * (max - min + 1) - min);
+			int random = (int)(Math.random() * (max - min + 1) + min);
 			//checkArr 배열에 random번지에 있는 값이 false이면
 			if(!checkArr[random]) {
 				//random을 배열에 저장.
@@ -34,7 +34,7 @@ public class ArrayRandomEx2 {
 		
 		//저장된 것이 3보다 작으면 반복
 		while(count < 3) {
-			int random = (int)(Math.random() * (max - min + 1) - min);
+			int random = (int)(Math.random() * (max - min + 1) + min);
 			//이미 저장된 랜덤수들과 하나하나 비교해서 같은게 있는지 확인하여
 			//있으면 반복문 종료
 			for(i=0 ; i<count ; i++) {
@@ -106,7 +106,7 @@ public class ArrayRandomEx2 {
 
 		int count = 0;
 		while(count <3) {
-			int random = (int)(Math.random() * (max - min + 1) - min);
+			int random = (int)(Math.random() * (max - min + 1) + min);
 			if(contains(arr, random, count)) {
 				arr[count] = random;
 				count++;
