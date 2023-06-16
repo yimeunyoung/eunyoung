@@ -40,40 +40,133 @@ public class VocabularyNote {
 			System.out.println("=======================");
 		}
 	}
-	/** 단어가 주어지면 단어장에 추가하는 메서드
-	 * 매개변수 :
-	 * 리턴타입 :
-	 * 메서드명 : 
+	/** 단어가 주어지면 단어장에 추가하는 메서드(단어 객체를 넘겨주는 경우)
+	 * 매개변수 : 단어(단어 객체) => Word word
+	 * 리턴타입 : 없음 => void
+	 * 메서드명 : insert
 	 */
+	public void insert(Word word) {
+		//단어장에 단어가 다 찼으면 추가를 하지 못함.
+		if(wordCount == wordList.length) {
+			System.out.println("Vocabulary note is  full!");
+			return;
+		}
+		//깊은 복사를 위해 Word의 복사생성자를 이용하여 새 단어를 생성한 후 추가
+		wordList[wordCount++] = new Word(word); //wordList의 wordCount 번지에 추가
+	}
+	
+	/** 단어와 뜻이 주어지면 단어장에 추가하는 메서드(단어와 뜻을 넘겨주는 경우)
+	 * 매개변수 : 단어와 뜻 => String title, String meaning
+	 * 리턴타입 : 없음 => void
+	 * 메서드명 : insert
+	 */
+	public void insert(String title, String meaning) {
+		//단어장에 단어가 다 찼으면 추가를 하지 못함.
+		if(wordCount == wordList.length) {
+			System.out.println("Vocabulary note is  full!");
+			return;
+		}
+		int index = indexOf(title);
+		//없는 단어이면 새 단어로 추가
+		if(index == -1) {
+			//단어와 뜻을 이용해 단어 객체를 생성한 후 단어장에 추가
+			wordList[wordCount++] = new Word(title, meaning);
+			return;
+		}
+		//있는 단어이면 뜻을 추가	
+		wordList[index].addMeaning(meaning);
+	}
 	
 	/** 단어가 주어지면 단어장에서 삭제하는 메서드
-	 * 매개변수 :
-	 * 리턴타입 :
-	 * 메서드명 : 
+	 * 매개변수 : 삭제할 단어 => String title
+	 * 리턴타입 : 없음 => void
+	 * 메서드명 : delete
 	 */
+	public void delete(String title) { //Word 클래스의 'removeMeaning'과 비슷
+		//단어가 어디있는지 찾아야 함.
+		int index = indexOf(title);
+		//단어가 단어장에 없으면 알림 메세지 출력 후 종료
+		if(index == -1) {
+			System.out.println("No words found");
+			return;
+		}
+		//찾은 위치부터 한칸씩 밀어줌.
+		for(int i = index; i < wordCount-1; i++) {
+			wordList[i] = wordList[i+1];
+		}
+		//단어의 개수를 하나 줄여줌
+		wordCount--;
+		//마지막 단어를 비워줌(null)
+		wordList[wordCount] = null;
+	}
+	/**단어가 주어지면 단어가 있는 위치를 알려주는 메서드
+	 * 단어가 없으면 -1을 리턴 // 보통 번지는 0부터 시작하기때문에 음수는 나올 수가 없다. 따라서 나올 수 없는 번지를 사용
+	 * 매개변수 : 단어 => String title
+	 * 리턴타입 : 위치  => 번지 => 정수
+	 * 메서드명 : indexOf // 번지를 찾을 때 index를 많이 씀
+	 */
+	public int indexOf(String title) {
+		//단어장에 등록된 단어들을 조회
+		for(int i = 0 ; i < wordCount; i++) {
+			//단어가 같으면 i번지를 리턴
+			if(wordList[i].getTitle().equals(title)) { // 기본 자료형이 아닌 애들(문자형)은 equals를 써야함
+				return i;
+			}
+		}
+		//여기까지 오면 일치하는 단어가 없는경우
+		return -1;
+	}
 	
 	/** 단어가 주어지면 단어장에 해당 단어를 출력하는 메서드
-	 * 매개변수 :
-	 * 리턴타입 :
-	 * 메서드명 : 
+	 * 매개변수 : 단어 => String title
+	 * 리턴타입 : 없음 => void
+	 * 메서드명 : search
 	 */
-	
-	/** 단어와 뜻이 주어지면 없는 단어이면 새로 단어를 추가하고,
-	 * 있는 단어이면 뜻만 새로 추가하는 메서드
-	 * 매개변수 :
-	 * 리턴타입 :
-	 * 메서드명 : 
-	 */
+	public void search(String title) {
+		int index = indexOf(title);
+		if(index == -1) {
+			System.out.println("No words found");
+			return;
+		}
+		
+		wordList[index].print(); //wordList의 index 번지에 있는 애들 출력한다는 의미
+	}
 	
 	/** 단어와 수정할 뜻의 번호와 수정할 뜻이 주어지면 단어의 뜻을 수정하는 메서드
-	 * 매개변수 :
-	 * 리턴타입 :
-	 * 메서드명 : 
+	 * 매개변수 : 단어, 수정할 뜻 번호, 수정할 뜻
+	 * 			=> String title, int meaningIndex, String Meaning
+	 * 리턴타입 : 없음 => void
+	 * 메서드명 : updateMeaning
 	 */
+	public void updateMeaning(String title, int meaningIndex, String meaning) {
+		
+		int index = indexOf(title);
+	
+		if(index == -1) {
+			System.out.println("No words found");
+			return;
+		}
+		if(!wordList[index].updateMeaning(meaningIndex, meaning)) {
+			System.out.println("Wrong number");
+		}
+	
+	}
 	
 	/** 단어와 수정할 단어가 주어지면 단어를 수정하는 메서드
-	 * 매개변수 :
-	 * 리턴타입 :
-	 * 메서드명 : 
+	 * 매개변수 : 단어와 수정할 단어 => String title, String updateTitle
+	 * 리턴타입 : 없음 => void
+	 * 메서드명 : updateTitle
 	 */
+	public void updateTitle(String title, String updateTitle) {
+		int index = indexOf(title);
+		
+		if(index == -1) {
+			System.out.println("No words found");
+			return;
+		}
+		wordList[index].setTitle(updateTitle);
+	}
+
 }
+
+
