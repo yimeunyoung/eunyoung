@@ -78,4 +78,9 @@ public class Word {
 		//제거 됐으면 뜻 개수를 하나 줄임
 		meaningCount--;
 	}
+	/* getter */
+	public String getTitle() {
+		return title;
+	}
+	
 }
