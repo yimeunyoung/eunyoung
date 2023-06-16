@@ -86,4 +86,25 @@ public class Array {
 	//반복문이 끝날때까지 중복이 안되면 중복이 안됐다고 리턴
 		return false;
 	}
+
+	/**정수형 배열이 주어지면 오름차순으로 버블 정렬하는 메서드
+	 * 매개변수 : 정수형 배열 => int arr[]
+	 * 리턴타입 : 없음 => void
+	 * 메서드명 : sort
+	 * 
+	 */
+	public static void sort(int arr[]) {
+		if(arr == null) {
+			return;
+		}
+		for(int i = 0; i < arr.length-1 ; i++) { //arr.length-1에서 -1을 안해줘도 되지만 하는 이유는 맨 마지막 숫자는 굳이 안해도 1개만 남아있기 때문에 비교 안하면 더 빠르게 끝날 수 있기때문 
+			for(int j = 0; j < arr.length-1-i ; j++) { //-i를 해주면 반복횟수를 1번이라도 줄일 수 있다.
+				if(arr[j] > arr[j+1]) { // 부등호 방향을 바꾸면 오름차순/내림차순 설정 가능
+					int tmp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = tmp;
+				}
+			}
+		}
+	}
 }
