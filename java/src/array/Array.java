@@ -38,10 +38,10 @@ public class Array {
 		if(max < min) {
 			int tmp = max;
 			max = min;
-			min = max;
+			min = tmp;
 		}
 		
-		//배열이 생성되어 있지 않으면(배열이 null이면) 메서드 종료
+		//배열이 생성되어 있지 않으면(배열이 null이면) arr 정의
 		if(arr == null) {
 			arr = new int[max - min + 1];
 		}
