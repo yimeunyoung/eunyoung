@@ -35,7 +35,7 @@ public class Subject {
 	/** 수행평가 성적 추가/수정 : setPerformance */
 	
 	/** 성적 추가(전체)/수정 */
-	public void updateScore(int midTerm, int finalTerm, int Performance) {
+	public void updateScore(int midTerm, int finalTerm, int performance) {
 		this.midTerm = midTerm;
 		this.finalTerm = finalTerm;
 		this.performance = performance;
