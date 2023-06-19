@@ -5,6 +5,7 @@ import java.util.Scanner;
 import day13.homework.vo.VocabularyNote;
 
 public class VocabularyNoteController {
+	
 	private Scanner sc = new Scanner(System.in); // Scanner를 Controller의 멤버로 둠
 	private VocabularyNote note = new VocabularyNote();
 	
