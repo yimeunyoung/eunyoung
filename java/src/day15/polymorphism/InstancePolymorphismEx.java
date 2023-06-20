@@ -107,3 +107,8 @@ class AirConditioner extends HomeAppliances{
 class Radio extends HomeAppliances{
 	double frequency;
 }
+
+
+
+
+
