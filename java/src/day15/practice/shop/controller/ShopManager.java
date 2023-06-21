@@ -68,16 +68,16 @@ public class ShopManager {
 			sell(); // 7번 메서드
 			break;
 		case 2:
-			store(); // class Product 1번 메서드
+			store(); // 6번 메서드 & class Product 1번 메서드
 			break;
 		case 3:
 			printProduct(); // 5번 메서드
 			break;
 		case 4:
-			printSales();
+			printSales(); // 4번 메서드
 			break;
 		case 5:
-			registerCustomer();
+			registerCustomer(); //3번 메서드
 			break;
 		case 6:
 			System.out.println("프로그램 종료");
