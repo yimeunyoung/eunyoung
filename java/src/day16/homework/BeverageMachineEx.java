@@ -27,6 +27,7 @@ public class BeverageMachineEx {
 	
 	public void run() {
 		int menu = -1;
+		final int EXIT = 4;
 		do {
 			//금액 투입
 			System.out.println("금액을 투입해주세요");
@@ -34,7 +35,8 @@ public class BeverageMachineEx {
 			printMenu();
 			//선택한 메뉴에 따른 기능을 실행
 			
-		}while(menu != 4);
+		}while(menu != EXIT);
+		System.out.println("프로그램 종료");
 	}
 	
 //1)
