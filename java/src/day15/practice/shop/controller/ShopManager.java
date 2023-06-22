@@ -5,9 +5,10 @@ import java.util.Scanner;
 import day15.practice.shop.vo.Customer;
 import day15.practice.shop.vo.Product;
 import day15.practice.shop.vo.Sales;
+import day17.interfaceEx.RunInterface;
 import day13.homework.vo.Word;
 
-public class ShopManager {
+public class ShopManager implements RunInterface {
 	/*가전 제품(TV, 라디오, 에어컨)을 관리하는 프로그램을 작성하세요.
 	 * 메뉴
 	 * 1.제품 판매 : 어떤 고객이 어떤 제품을 구매했는지 관리
