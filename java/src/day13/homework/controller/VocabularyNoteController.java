@@ -3,8 +3,9 @@ package day13.homework.controller;
 import java.util.Scanner;
 
 import day13.homework.vo.VocabularyNote;
+import day17.interfaceEx.RunInterface;
 
-public class VocabularyNoteController {
+public class VocabularyNoteController implements RunInterface {
 	
 	private Scanner sc = new Scanner(System.in); // Scanner를 Controller의 멤버로 둠
 	private VocabularyNote note = new VocabularyNote();
