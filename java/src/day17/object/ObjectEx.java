@@ -25,7 +25,7 @@ public class ObjectEx {
 	
 		System.out.println("==============");
 		//Clone()을 이용해서 복제가 제대로 됨
-		Point2 pt22 = (Point2)pt2.clone(); //다운 캐스팅 => (클래스명)을 반드시 추가
+		Point2 pt22 = (Point2)pt2.clone(); //다운 캐스팅 => (클래스명)을 반드시 추가 //중요!
 		//주소가 다르지만
 		System.out.println(pt2 == pt22);
 		//두 객체가 같다고 판별
