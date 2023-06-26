@@ -4,11 +4,11 @@ import java.util.Objects;
 
 import lombok.Data;
 
-public class ObjectEx {
+public class ObjectEx { //toString 예제
 
 	public static void main(String[] args) throws CloneNotSupportedException {
-		Point1 pt1 = new Point1(10, 20);
-		System.out.println(pt1);
+		Point1 pt1 = new Point1(10, 20); //객체 생성
+		System.out.println(pt1);// 최상위 클래스의 object를 이용하여(매개변수 다형성을 이용하여) 다양한 객체들이 와도 동일하게 실행하게 함
 	
 		Point1 pt11 = new Point1(10, 20);
 		System.out.println(pt1 == pt11);
