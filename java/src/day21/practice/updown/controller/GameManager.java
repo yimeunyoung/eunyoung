@@ -1,10 +1,10 @@
-package day21.updown.controller;
+package day21.practice.updown.controller;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
-import day21.updown.vo.RecordGame;
+import day21.practice.updown.vo.RecordGame;
 
 public class GameManager implements Program {
 	/* UpDown프로그램을 작성하고, 기록도 관리하는 기능을 추가하세요
