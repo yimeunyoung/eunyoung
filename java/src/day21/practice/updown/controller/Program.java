@@ -1,4 +1,4 @@
-package day21.updown.controller;
+package day21.practice.updown.controller;
 
 public interface Program {
 	void printMenu();
