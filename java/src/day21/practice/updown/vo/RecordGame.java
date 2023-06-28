@@ -1,4 +1,4 @@
-package day21.updown.vo;
+package day21.practice.updown.vo;
 
 import lombok.Data;
 
