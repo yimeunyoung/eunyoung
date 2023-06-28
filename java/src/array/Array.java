@@ -1,5 +1,7 @@
 package array;
 
+import java.util.HashSet;
+
 public class Array {
 	//배열 전체 출력
 	public static void printArray(int arr[]) {
@@ -61,6 +63,7 @@ public class Array {
 		}
 		return arr;
 	}
+
 	/**주어진 배열에 중복된 값이 있는지 없는지 알려주는 메서드=> 사용자 입력체크에 대입
 	 * 매개변수 : 배열 => int arr[]
 	 * 리턴타입 : 중복여부 => boolean
