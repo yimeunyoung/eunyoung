@@ -58,7 +58,7 @@ public class StudentManager3 implements Program { // Stream 설명추가
 			 * std는 매개변수 이름이기 때문에 다른이름으로 수정해도 됨
 			 * */
 				.filter(std->std.getGrade()== grade1)
-				//fileter에 있는 매개변수는 위와 아래가 같은 동작
+				//filter에 있는 매개변수는 위와 아래가 같은 동작
 				.filter(new Predicate<Student>() {
 					@Override
 					public boolean test(Student t) {
