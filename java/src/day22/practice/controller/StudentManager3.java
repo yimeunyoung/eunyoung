@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 import day22.practice.vo.Student;
 
-public class StudentManager3 implements Program {
+public class StudentManager3 implements Program { // Stream 설명추가
 
 	private List<Student> list = Arrays.asList(
 		new Student(1,1,1,"Hong"),
