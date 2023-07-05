@@ -97,8 +97,36 @@ public class LibraryController {
 	}
 
 	private void returnBook() {
-		// TODO Auto-generated method stub
+		//반납할 도서 입력
+		sc.nextLine();//이전에 입력한 엔터 처리
+		System.out.print("도서 번호 : ");
+		String num = sc.nextLine();
+		//대출중인지 확인
+		boolean possible 
+			= bookList
+				.stream()
+				.filter(b->!b.isRental()&&b.getNum().equals(num))
+				.count() > 0;
+	
+		//올바르지 않으면(없는 도서번호이거나, 대출중인 도서인 경우)
+		//반납할 수 없다고 출력
+		if(!possible) {
+			System.out.println("반납할 수 없습니다.");
+			return;
+		}
+		int index =rentalList.indexOf(new Book(num, null, null, null));
+		Date returnDate = new Date();
+		ReturnBrowsing rb2 
+			= new ReturnBrowsing(bookList.get(index), returnDate);
 		
+		//대출열람 리스트에서 삭제
+		rentalList.remove(rb2);
+		//도서 리스트에 추가
+		bookList.add(rb2);
+		//반납일
+		System.out.println("반납일 : " + rb2.getReturnDateStr());
+
+			
 	}
 
 	private void rentalBook() {

@@ -28,10 +28,18 @@ public class RentalBrowsing implements Serializable {
 		this.book = book;
 		this.rentalDate = date;
 	}
-	 public String getRentalDateStr() {
+	public String getRentalDateStr() {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
 			return format.format(rentalDate);
 	 }
 
+	public void ReturnBrowsing(Book book, Date date) {
+		this.book = book;
+		this.returnDate = date;
+	}
+	public String getReturnDateStr() {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
+			return format.format(returnDate);
+	 }
 
 }
