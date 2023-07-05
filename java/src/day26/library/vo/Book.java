@@ -20,8 +20,6 @@ public class Book implements Serializable {
 	private String num, title, author, isbn;
 	private boolean rental; //대출 여부 관리
 	
-	
-	
 	public Book(String num, String title, String author, String isbn) {
 		super();
 		this.num = num;
@@ -36,7 +34,6 @@ public class Book implements Serializable {
 			   "도서제목 : " + title + "\n" +
 			   "도서저자 : " + author + "\n" +
 			   "ISBN : " + isbn;
-		
 	}
 
 	public void rentalBook() {
