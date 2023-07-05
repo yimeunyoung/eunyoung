@@ -1,5 +1,10 @@
 package day25.tc.student.contoller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +14,7 @@ import day25.tc.student.vo.Student;
 public class StudentController3 {
 	private List<Student> list = new ArrayList<Student>();
 	private Scanner sc = new Scanner(System.in);
+	private Student st = new Student(num, name, major);
 	
 	public void run() {
 			int menu;
@@ -69,4 +75,25 @@ public class StudentController3 {
 			System.out.println(tmp2);
 		}
 	}
+
+	public void load() {
+		try(FileInputStream fis = new FileInputStream("Student.txt");
+			ObjectInputStream ois = new ObjectInputStream(fis)){
+			st = (Student)ois.readObject();
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	public void save() {
+		try(FileOutputStream fos = new FileOutputStream("Student.txt");
+				ObjectOutputStream oos = new ObjectOutputStream(fos)){
+				oos.writeObject(sc);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
+

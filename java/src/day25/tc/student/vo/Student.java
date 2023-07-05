@@ -1,6 +1,12 @@
 package day25.tc.student.vo;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3893767269811563720L;
 	private String num, name, major;
 	
 	public Student(String num, String name, String major) { // @AllArgsConstructor가 있으면 안만들어줘도 됨
