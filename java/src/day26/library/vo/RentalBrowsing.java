@@ -2,14 +2,13 @@ package day26.library.vo;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
+
 //대출 열람(도서대출 기록)
 @Data
-public class BookRental implements Serializable {
+public class RentalBrowsing implements Serializable {
 	/* 도서대출
 	 * -도서
 	 * -대출일
@@ -30,16 +29,9 @@ public class BookRental implements Serializable {
 		this.rentalDate = date;
 	}
 	 public String getRentalDateStr() {
-		 SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
-		 return format.format(rentalDate);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
+			return format.format(rentalDate);
 	 }
-	//대출일
-	
-	
-	
-	//반납예정일
-	
-	
-	//반납일
-		
+
+
 }

@@ -18,7 +18,7 @@ public class Book implements Serializable {
 	private static final long serialVersionUID = -6424306556197258409L;
 	
 	private String num, title, author, isbn;
-	private boolean rentalBook; //대출 여부 관리
+	private boolean rental; //대출 여부 관리
 	
 	
 	
@@ -40,10 +40,10 @@ public class Book implements Serializable {
 	}
 
 	public void rentalBook() {
-		this.rentalBook = true; // setRental(true);
+		this.rental = true; // setRental(true);
 	}
 	public void returnBook() {
-		this.rentalBook = false; //setRental(false);
+		this.rental = false; //setRental(false);
 	}
 
 	@Override

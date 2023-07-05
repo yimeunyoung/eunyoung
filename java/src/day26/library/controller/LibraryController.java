@@ -1,6 +1,5 @@
 package day26.library.controller;
 
-import java.awt.print.Book;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,9 +8,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Stream;
+
+import day26.library.vo.Book;
+import day26.library.vo.RentalBrowsing;
 
 public class LibraryController {
 	/* 도서관리 프로그램 작성
@@ -22,14 +24,14 @@ public class LibraryController {
 	 * */
 	private Scanner sc = new Scanner(System.in);
 	//도서 리스트
-	private List<Book> bookList = new ArrayList<>();
+	List<Book> bookList = new ArrayList<>();
 	//대출열람 리스트
-	List<RentalBrowsing> rentalBookList = new ArrayList(); 
+	List<RentalBrowsing> rentalList = new ArrayList<>(); 
 	
 	public void run() {
 		int menu;
-		String bookfileName = "src/day26/library/book.txt";
-		loadBook(bookfileName);
+		String bookFileName = "src/day26/library/book.txt";
+		loadBook(bookFileName);
 		do {
 			System.out.println("=========");
 			//메뉴 출력
@@ -40,7 +42,7 @@ public class LibraryController {
 			runMenu(menu);
 			System.out.println("=========");
 		}while(menu != 4);
-			saveBook(bookfileName);
+			saveBook(bookFileName);
 			sc.close();
 		}
 	
@@ -101,9 +103,10 @@ public class LibraryController {
 
 	private void rentalBook() {
 		//대출 가능한 도서들을 조회
-		Stream<Book> stream = bookList.stream();
-		bookList.stream()
-			.filter(b->!b.isRentalBook())//대출 가능한 도서만 추출
+		//Stream<Book> stream = bookList.stream();
+		bookList
+			.stream()
+			.filter(b->!b.isRental())//대출 가능한 도서만 추출
 			.forEach(b->{ //추출한 도서를 출력
 			System.out.println("======");
 			System.out.println(b);
@@ -130,7 +133,7 @@ public class LibraryController {
 		boolean possible 
 			= bookList
 				.stream()
-				.filter(b->!b.isRentalBook()&&b.getNum().equals(num))
+				.filter(b->!b.isRental()&&b.getNum().equals(num))
 				.count() > 0;
 		
 		//올바르지 않으면(없는 도서번호이거나, 대출중인 도서인 경우)
@@ -142,16 +145,17 @@ public class LibraryController {
 		//올바르면 대출을 진행
 		//도서 대출 객체를 생성. 도서, 대출일, 대출기간
 		int index = bookList.indexOf(new Book(num, null, null, null));
-		Date rentalDate = new Data();
-		RentalBrowsing lb 
-			= new RentalBrowsing(bookList.get(index) , rentalDate, 14);
+		Date rentalDate = new Date();
+		RentalBrowsing rb 
+			= new RentalBrowsing(bookList.get(index), rentalDate, 14);
 		
 		//대출열람 리스트에 추가
-		rentalList.add(lb);
-		bookList.get(index).rentalBook();
+		rentalList.add(rb);
+		bookList.get(index).rentalBook();//도서에 대출했다고 수정
 		//대출일을 출력
-		System.out.println("대출일 : " + lb.getRentalDateStr());
+		System.out.println("대출일 : " + rb.getRentalDateStr());
 		//반납예정일 출력
+		
 	}
 	
 	private void insertBook() {
