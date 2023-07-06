@@ -1,5 +1,6 @@
 package day27.student.vo;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -7,7 +8,12 @@ import java.util.Objects;
 import lombok.Data;
  
 @Data
-public class Attendance {
+public class Attendance implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2085037716244822504L;
+	
 	private Date date; //출석날짜
 	private Student student; //학생정보
 	private boolean attendance; // 출석 여부 관리

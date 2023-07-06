@@ -1,5 +1,12 @@
 package day27.student.controller;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +26,8 @@ public class AttendanceController {
 	
 	public void run() {
 		int menu;
+		String FileName = "src/day27/attendance/attendancebook.txt";
+		load(FileName);
 		do {
 			System.out.println("==========");
 			printMenu();
@@ -27,8 +36,32 @@ public class AttendanceController {
 			runMenu(menu);
 			System.out.println("==========");
 		}while(menu != EXIT);
+		save(FileName);
 	}
 	
+	private void save(String FileName) {
+		try(FileOutputStream fos = new FileOutputStream(FileName);
+				ObjectOutputStream oos = new ObjectOutputStream(fos)){
+				oos.writeObject(book);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void load(String FileName) {
+		try(ObjectInputStream ois 
+				= new ObjectInputStream(new FileInputStream(FileName))){
+				book = (AttendanceBook)ois.readObject();
+			}catch(FileNotFoundException e) {
+				System.out.println("불러올 파일이 없습니다.");
+			}catch(EOFException e) {	
+				System.out.println("불러오기 완료.");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}catch(ClassNotFoundException e) {
+				System.out.println("AttendanceBook 클래스를 찾을 수 없습니다.");
+			}
+	}
 	private void printMenu() {
 		System.out.println("메뉴");
 		System.out.println("1. 학생 등록");
@@ -58,10 +91,10 @@ public class AttendanceController {
 	
 	private void insertStudent() {
 		//정보(학번, 이름) 입력
-		System.out.print("number : ");
+		System.out.print("학번 : ");
 		String num = sc.next();
 		sc.nextLine();
-		System.out.print("name : ");
+		System.out.print("이름 : ");
 		String name = sc.nextLine();
 		
 		//출석부에 새 학생을 추가(멤버로 출석부 필요)

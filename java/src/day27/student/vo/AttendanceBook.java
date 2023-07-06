@@ -1,5 +1,6 @@
 package day27.student.vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,7 +8,13 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class AttendanceBook {//생성자 필요 X
+public class AttendanceBook implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4140204143369871679L;
+
+	//생성자 필요 X
 
 	private List<Attendance> list = new ArrayList<>(); // 출석부 (출석을 해야 생성)
 	private List<Student> stdList = new ArrayList<>(); // 학생리스트

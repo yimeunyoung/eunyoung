@@ -1,11 +1,17 @@
 package day27.student.vo;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import lombok.Data;
 
 @Data
-public class Student { 
+public class Student implements Serializable { 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1724405455590502693L;
+	
 	private String num, name; // 학번, 이름
 	
 	public Student(String num, String name) {
