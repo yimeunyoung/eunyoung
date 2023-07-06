@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -21,13 +20,14 @@ import day27.student.vo.Student;
 public class AttendanceController {
 	private Scanner sc = new Scanner(System.in); 
 	private final static int EXIT = 4;
-	List<Student> stdList = new ArrayList<>();
+	
+	//출석부
 	private AttendanceBook book = new AttendanceBook();
 	
 	public void run() {
 		int menu;
-		String FileName = "src/day27/attendance/attendancebook.txt";
-		load(FileName);
+		String fileName = "src/day27/student/attendancebook.txt";
+		load(fileName);
 		do {
 			System.out.println("==========");
 			printMenu();
@@ -36,11 +36,11 @@ public class AttendanceController {
 			runMenu(menu);
 			System.out.println("==========");
 		}while(menu != EXIT);
-		save(FileName);
+		save(fileName);
 	}
 	
-	private void save(String FileName) {
-		try(FileOutputStream fos = new FileOutputStream(FileName);
+	private void save(String fileName) {
+		try(FileOutputStream fos = new FileOutputStream(fileName);
 				ObjectOutputStream oos = new ObjectOutputStream(fos)){
 				oos.writeObject(book);
 		}catch(IOException e) {
@@ -48,9 +48,9 @@ public class AttendanceController {
 		}
 	}
 
-	private void load(String FileName) {
+	private void load(String fileName) {
 		try(ObjectInputStream ois 
-				= new ObjectInputStream(new FileInputStream(FileName))){
+				= new ObjectInputStream(new FileInputStream(fileName))){
 				book = (AttendanceBook)ois.readObject();
 			}catch(FileNotFoundException e) {
 				System.out.println("불러올 파일이 없습니다.");
