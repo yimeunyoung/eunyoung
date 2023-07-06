@@ -31,7 +31,9 @@ public class LibraryController {
 	public void run() {
 		int menu;
 		String bookFileName = "src/day26/library/book.txt";
+		String rentalFileName = "src/day26/library/rental.txt";
 		loadBook(bookFileName);
+		loadRental(rentalFileName);
 		do {
 			System.out.println("=========");
 			//메뉴 출력
@@ -43,8 +45,38 @@ public class LibraryController {
 			System.out.println("=========");
 		}while(menu != 4);
 			saveBook(bookFileName);
+			saveRental(rentalFileName);
 			sc.close();
 		}
+	
+	private void saveRental(String fileName) {
+		try(FileOutputStream fos = new FileOutputStream(fileName);//상대경로와 절대경로 모두 가능
+				ObjectOutputStream oos = new ObjectOutputStream(fos)){
+				for(RentalBrowsing tmp : rentalList) {
+				oos.writeObject(tmp);
+				}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadRental(String fileName) {
+		try(ObjectInputStream ois 
+				= new ObjectInputStream(new FileInputStream(fileName))){
+			while(true) {
+				RentalBrowsing tmp = (RentalBrowsing)ois.readObject();
+				rentalList.add(tmp);
+				}
+			}catch(FileNotFoundException e) {
+				System.out.println("불러올 파일이 없습니다.");
+			}catch(EOFException e) {	
+				System.out.println("불러오기 완료.");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}catch(ClassNotFoundException e) {
+				System.out.println("RentalBrowsing 클래스를 찾을 수 없습니다.");
+			}
+	}
 	
 	private void saveBook(String bookFileName) {
 		try(FileOutputStream fos = new FileOutputStream(bookFileName);//상대경로와 절대경로 모두 가능
@@ -97,36 +129,30 @@ public class LibraryController {
 	}
 
 	private void returnBook() {
-		//반납할 도서 입력
-		sc.nextLine();//이전에 입력한 엔터 처리
+		sc.nextLine(); //엔터처리
+		//반납도서 번호를 입력
 		System.out.print("도서 번호 : ");
 		String num = sc.nextLine();
-		//대출중인지 확인
-		boolean possible 
-			= bookList
-				.stream()
-				.filter(b->!b.isRental()&&b.getNum().equals(num))
-				.count() > 0;
-	
-		//올바르지 않으면(없는 도서번호이거나, 대출중인 도서인 경우)
-		//반납할 수 없다고 출력
-		if(!possible) {
-			System.out.println("반납할 수 없습니다.");
+		
+		//대출한 도서가 아니면 반납을 X
+		int index = bookList.indexOf(new Book(num, null, null, null));
+		if(index == -1) {
+			System.out.println("대출한 도서가 아닙니다");
 			return;
 		}
-		int index =rentalList.indexOf(new Book(num, null, null, null));
-		Date returnDate = new Date();
-		ReturnBrowsing rb2 
-			= new ReturnBrowsing(bookList.get(index), returnDate);
+		//맞으면 반납
+		//반납한 도서의 상태를 대출 가능으로 수정
+		Book returnBook = bookList.get(index);
+		returnBook.returnBook();
 		
-		//대출열람 리스트에서 삭제
-		rentalList.remove(rb2);
-		//도서 리스트에 추가
-		bookList.add(rb2);
-		//반납일
-		System.out.println("반납일 : " + rb2.getReturnDateStr());
-
-			
+		//대출열람 리스트에서 대출한 도서의 반납일을 오늘 날짜로 수정
+		//반납한 도서의 대출 열람을 찾아야 함.
+		int rbIndex = rentalList.lastIndexOf(new RentalBrowsing(returnBook, null, 14));
+		RentalBrowsing tmpRb = rentalList.get(rbIndex);
+		tmpRb.setReturnDate(new Date());
+		System.out.println("대출일 : " + tmpRb.getRentalDateStr());
+		System.out.println("반납일 : " + tmpRb.getReturnDateStr());
+		
 	}
 
 	private void rentalBook() {
@@ -134,26 +160,27 @@ public class LibraryController {
 		//Stream<Book> stream = bookList.stream();
 		bookList
 			.stream()
-			.filter(b->!b.isRental())//대출 가능한 도서만 추출
-			.forEach(b->{ //추출한 도서를 출력
-			System.out.println("======");
-			System.out.println(b);
-			System.out.println("======");
-		});
-		/* 위의 코드들을 대체하여 사용 가능
+			.filter(b->!b.isRental()) //대출 가능한 도서만 추출
+			.forEach(b->{	//추출한 도서를 출력
+				System.out.println("=============");
+				System.out.println(b);
+				System.out.println("=============");
+			});
+		/*
 		for(Book tmp : bookList) {
-			if(!tmp.isRentalBook()) {
-				System.out.println("======");
+			if(!tmp.isLoan()) {
+				System.out.println("=============");
 				System.out.println(tmp);
-				System.out.println("======");
+				System.out.println("=============");
 			}
-		}*/
+		}
+		*/
 		//도서 번호를 입력
 		sc.nextLine();//이전에 입력한 엔터 처리
 		System.out.print("도서 번호 : ");
 		String num = sc.nextLine();
 		
-		//대출 신청
+		//대출을 신청
 		//도서 번호가 올바른지 확인
 		//번호에 맞는 도서가 있는지 확인
 		//도서가 없으면 올바르지 않음
@@ -163,9 +190,8 @@ public class LibraryController {
 				.stream()
 				.filter(b->!b.isRental()&&b.getNum().equals(num))
 				.count() > 0;
-		
 		//올바르지 않으면(없는 도서번호이거나, 대출중인 도서인 경우)
-		//대출할 수 없다고 출력
+		//대출할수 없다고 출력
 		if(!possible) {
 			System.out.println("대출할 수 없습니다.");
 			return;
@@ -175,17 +201,16 @@ public class LibraryController {
 		int index = bookList.indexOf(new Book(num, null, null, null));
 		Date rentalDate = new Date();
 		RentalBrowsing rb 
-			= new RentalBrowsing(bookList.get(index), rentalDate, 14);
-		
+			= new RentalBrowsing(bookList.get(index) , rentalDate , 14);
 		//대출열람 리스트에 추가
 		rentalList.add(rb);
 		bookList.get(index).rentalBook();//도서에 대출했다고 수정
 		//대출일을 출력
 		System.out.println("대출일 : " + rb.getRentalDateStr());
 		//반납예정일 출력
-		
+		System.out.println("반납예정일 : " + rb.getEstimatedDateStr());
 	}
-	
+
 	private void insertBook() {
 		sc.nextLine(); //이전에 입력한 엔터 처리
 		//도서 정보 입력
@@ -200,6 +225,12 @@ public class LibraryController {
 		
 		//입력 정보를 이용하여 도서 객체를 생성
 		Book book = new Book(num, title, author, isbn);
+		
+		//도서번호 중복체크
+		if(bookList.contains(book)) {
+			System.out.println("이미 등록된 도서 번호입니다. 확인해주세요");
+			return;
+		}
 		
 		//도서 리스트에 도서 객체를 추가
 		bookList.add(book);
