@@ -1,5 +1,14 @@
 package day11.homework;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import array.Array;
@@ -33,12 +42,15 @@ public class BaseballGameEx {
 		int strike = 0; //스트라이크 개수
 		int ball = 0; //볼의 개수
 		Scanner sc = new Scanner(System.in);
+		List<BaseballGameEx> list = new ArrayList<>();
 		
 		//맞춰야할 숫자 3개를 랜덤으로 생성(중복X)
 		Array.createRandomArray(min, max, com);
 		//Array.printArray(com); // 나중에 주석처리
 		
 		//반복문
+		String FileName = "src/day11/homework/game.txt";
+		loadGame(FileName);
 		do {
 			//사용자가 숫자 3개를 입력
 			System.out.print("user : ");
@@ -50,7 +62,7 @@ public class BaseballGameEx {
 				System.out.println("You must not enter the same number!");
 				continue;
 			}
-			
+
 			//판별
 			//스트라이크 개수 판별
 			strike = strike(com,user);
@@ -61,10 +73,39 @@ public class BaseballGameEx {
 			//스트라이크와 볼의 개수에 맞게 출력
 			printResult(strike, ball);
 		}while(strike < 3);
+		saveGame(FileName);
 		
 		System.out.println("Good!");
 		sc.close();
 	}
+	
+	private static void saveGame(String fileName) {
+		try(FileOutputStream fos = new FileOutputStream(fileName);
+				ObjectOutputStream oos = new ObjectOutputStream(fos)){
+			BaseballGameEx bs = new BaseballGameEx();
+				oos.writeObject(bs);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private static void loadGame(String fileName) {
+		try(ObjectInputStream ois 
+				= new ObjectInputStream(new FileInputStream(fileName))){
+			while(true) {
+				BaseballGameEx tmp = (BaseballGameEx)ois.readObject();
+				list.add(tmp);
+				}
+			}catch(FileNotFoundException e) {
+				System.out.println("불러올 파일이 없습니다.");
+			}catch(EOFException e) {	
+				System.out.println("불러오기 완료.");
+			}catch(IOException e) {
+				e.printStackTrace();
+			}catch(ClassNotFoundException e) {
+				System.out.println("BaseballGame 클래스를 찾을 수 없습니다.");
+			}
+	}
+	
 	/** 스트라이크 개수를 판별하는 메서드
 	 * => 두 배열에서 같은 번지에 있는 값들이 몇개 같은지 알려주는 메서드
 	 * 매개변수 : 두 배열 => int arr1[], int arr2[]
