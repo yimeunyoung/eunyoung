@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>글자 그림자</title>
+	<style>
+		[class^=shadow]{ /* class 이름이 shadow로 시작하는 */
+			line-height: 30px; font-size: 20px; font-weight: bold;
+		}
+		.shadow1{
+			text-shadow: 3px 3px 1px red;
+		}
+		.shadow2{
+			color: white; text-shadow: 0 0 1px black;
+		}
+		.shadow3{
+			color : white; text-shadow: 1px 1px black;
+		}
+		.shadow4{
+			/* (,)콤마를 통해서 text-shadow를 여러개 넣을 수 있음
+			color에서 # 다음 6개의 문자가 나와야 하지만 중복일 경우 줄여서 쓸 수 있음
+			예) 흰색 #ffffff -> #fff */
+			color: #fff; text-shadow: 0 0 1px black, 2px 2px 3px gray;
+		} 
+	</style>
+</head>
+<body>
+	<div class="shadow1">Hello</div>
+	<div class="shadow2">Hello</div>
+	<div class="shadow3">Hello</div>
+	<div class="shadow4">Hello</div>
+	<div class="shadow5">Hello</div>
+</body>
+</html>
