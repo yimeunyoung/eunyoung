@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>검색창 예제</title>
+</head>
+	<style>
+		.container{
+			width: 500px; height: 50px; box-sizing: border-box;
+			border: 2px solid green; background-color: white; padding: 5px; position: relative;
+			border-radius: 25px;
+			padding-left: 15px;
+		}
+		
+		.input-search{
+			width: 400px; height: 100%; box-sizing: border-box; border: none;/* border: none => 테두리를 없앰 */
+			outline: none;
+		}
+		
+		.btn-search{
+			width: 50px; height: 50px; background-color:green;
+			position: absolute; top: -2px; right: 0; border: 0; /* border: 0 => 두께를 0*/
+			border-radius: 0 25px 25px 0;
+		}
+	</style>
+<body>
+<form class="container">
+	<input type="text" class="input-search">
+	<button class="btn-search"></button>
+</form>
+</body>
+</html>
