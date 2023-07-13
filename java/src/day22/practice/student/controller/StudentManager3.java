@@ -58,7 +58,7 @@ public class StudentManager3 implements Program { // Stream 설명추가
 			 * std는 매개변수 이름이기 때문에 다른이름으로 수정해도 됨
 			 * */
 				.filter(std->std.getGrade()== grade1)
-				//filter에 있는 매개변수는 위와 아래가 같은 동작
+				//fileter에 있는 매개변수는 위와 아래가 같은 동작
 				.filter(new Predicate<Student>() {
 					@Override
 					public boolean test(Student t) {
@@ -78,21 +78,19 @@ public class StudentManager3 implements Program { // Stream 설명추가
 			stream
 				.filter(std->std.equals(new Student(grade2, classNum2, num2, null)))
 				.forEach(std->System.out.println(std));
-
 			break;
 		case 4:break;
 			default:
-				System.out.println("Wrong menu");
 			}
 		
 		}
 	
-		private void print(Predicate<Student> p) {
-			for(Student tmp : list) {
-				if(p.test(tmp)) {
-					System.out.println(tmp);
-				}
+	private void print(Predicate<Student> p) {
+		for(Student tmp : list) {
+			if(p.test(tmp)) {
+				System.out.println(tmp);
 			}
 		}
-		
 	}
+
+}
