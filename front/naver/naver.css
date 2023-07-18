@@ -1,27 +1,25 @@
 @charset "tuf-8";
 
-*{padding: 0; margin: 0; color: #101010;
-font-family: -apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",helvetica,"Apple SD Gothic Neo",sans-serif;
+*{ padding: 0; margin: 0; color: #101010;
+	font-family: -apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",helvetica,"Apple SD Gothic Neo",sans-serif
 }
-a{text-decoration: none;}
+a{ text-decoration: none;}
 
 body{
 	min-width: 1340px;
 }
-ul,ol{
-	list-style: none;
-}
-html{
-font-size: 10.5px; line-height: 10.5px;
+ul,ol{list-style: none;}
+html{ 
+	font-size: 10.5px; line-height: 10.5px;
 }
 
 /* 헤더 영역(검색창, 메뉴 등) */
 header{
 	width: 1280px; 
-	height: 156px;
 	margin: 0 auto;/* 박스 가운데 정렬 */
 	position: relative;
 	padding: 64px 0 42px;
+	height: 156px;
 }
 /* 햄버거 메뉴 */
 #ham_menu{
@@ -35,9 +33,9 @@ header{
 	content: ''; display: block; background-image: url(../img/naver_icon.png);
 	background-size: 422px 405px; /* 원래 이미지 사이즈는 844px 810px*/
 	background-position: -335px -284px;
+	width: 26px; height: 26px;
 	/* hover했을 때 회색 타원 아래로 햄버거 메뉴가 깔리는데 그 문제를 해결하기 위해 
 	position : relative 사용 */
-	width: 26px; height: 26px;
 	position: relative; 
 }
 #ham_menu .btn-ham:hover::before{
@@ -258,20 +256,19 @@ header{
 /* 컨텐츠 왼쪽 영역 */
 #container .box-left{
 	float: left; width: 830px;
-	position: absolute;
 
+	height: 500px;
 }
-/* 첫 번째 왼쪽 컨텐츠 : 배너 광고 */
+/* 1번째 왼쪽 컨텐츠 : 배너 광고 */
 #container .box-left .box-banner{
 height: 130px;
 }
 #container .box-left .box-banner iframe{
-	width: 100%; height: 130px; border-radius: 8px; 
-
-	background-color: gray;
+	width: 100%; height: 130px;
+	background-color: gray; border-radius: 8px;
 }
 
-/* 2번째 왼쪽 컨텐츠 :뉴스 스탠드 */
+/* 2번째 왼쪽 컨텐츠 : 뉴스 스탠드 */
 #container .box-left .box-newsstand .box-newsstand-body{
 	padding: 18px 20px;
 }
@@ -318,6 +315,9 @@ height: 130px;
 	border-radius: 4px; line-height: 26px; font-size: 1.4rem;
 	letter-spacing: -.4px;
 }
+#container .box-left .box-newsstand .box-header-sub .box-sub-left{
+	float: left;
+}
 #container .box-left .box-newsstand .box-header-sub .box-sub-left .icon-triangle-down{
 	background-image: url(../img/naver_icon.png);
 	background-size: 422px 405px;  display: inline-block;
@@ -326,14 +326,16 @@ height: 130px;
 	margin: 10px 0 0 5px; vertical-align: top;
 }
 #container .box-left .box-newsstand .box-header-sub .box-sub-left .box-news,
-#container .box-left .box-newsstand .box-header-sub .box-sub-right .box-home{
+#container .box-left .box-newsstand .box-header-sub .box-sub-right .link-news-home{
   padding-left: 25px;	position: relative;
 }
+/* | */
 #container .box-left .box-newsstand .box-header-sub .box-sub-left .box-news::before,
 #container .box-left .box-newsstand .box-header-sub .box-sub-right .link-news-home::before{
 	content: ''; position: absolute; top: 7px; left: 12px;
 	width: 1px; height: 12px; background-color: #d3d5d7;
 }
+/* 가운데 점 */
 #container .box-left .box-newsstand .box-header-sub .box-sub-left .btn-media::after{
 	content: ''; display: inline-block; 
 	width: 3px; height: 3px;
@@ -361,7 +363,7 @@ height: 130px;
 	height: 26px; overflow: hidden;
 }
 #container .box-left .box-newsstand .box-newsstand-page{
-	padding: 10px 0 11px;
+	padding: 10px 0 11px; 
 	border-top: 1px solid #ebebeb;
 }
 
@@ -377,25 +379,27 @@ height: 130px;
 	 letter-spacing: -.4px;
 	 font-size: 1.4rem;
 }
-#container .box-right .box-account .box-title{
+#container .box-right>.box-account .box-title{
 	text-align: center; line-height: 20px;
 }
-#container .box-right .box-account .link-login{
+#container .box-right>.box-account .link-login{
 	display: block; margin-top: 13px; padding: 17px 0;
-	line-height: 20px; border: 1px solid rgba(0, 0, 0, .06);
+	line-height: 20px; border: 1px solid rgba(0,0,0,.06);
 	background-color: #03c75a; border-radius: 4px; color: #fff;
-	text-align: center;
+	text-align: center; 
 }
-#container .box-right .box-account .link-login:hover{
+#container .box-right>.box-account .link-login:hover{
 	background-color: #17b75e;
 }
 #container .box-right>.box-account .icon-login{
-	content: ''; display: block; background-image: url(../img/naver_icon.png);
-	background-size: 422px 405px; 
+	background-image: url(../img/naver_icon.png);
+	background-size: 422px 405px;
 	background-position: -120px -166px;
-	width: 72px; height: 14px; margin: 3px 8px 0 0;
+	width: 72px; height: 14px; 
 	/* 로그인 글자와 옆에 나란히 있으면서 크기를 조정해야 되기 때문에 display:inline-block 으로 처리*/
-	display: inline-block; vertical-align: top;
+	display: inline-block;
+	margin: 3px 8px 0 0;
+	vertical-align: top;
 }
 #container .box-right>.box-account .box-links{
 	margin-top: 16px; font-size: 1.3rem; text-align: center; line-height: 20px;
@@ -403,11 +407,11 @@ height: 130px;
 #container .box-right>.box-account .box-links>a{
 	display: inline-block; color: #606060;
 }
-/* |를 표시 */
+/* | 를 표시 */
 #container .box-right>.box-account .box-links>a+a::before{
-	content: ''; display: inline-block;
+	content: ''; display: inline-block; 
 	width: 1px; height: 12px; background-color: #d3d5d7;
-	margin: 4px 12px 0; vertical-align: top; 
+	margin: 4px 12px 0; vertical-align: top;
 }
 
 
@@ -417,9 +421,10 @@ height: 130px;
 
 /* 푸터 영역(회사정보) */
 footer{
-	min-width: 1280px; /*최소 너비로 브라우저가 작을 때에는 1280px, 클때는 100%*/
+	min-width: 1280px; /* 최소 너비로, 브라우저 작을때는 1280px, 클때는 100%*/
 	background-color: #f5f6f7;
-	/* 아래는 나중에 삭제할 속성 */
+	
+	/* 아래는 나중에 삭제할 속성  */
 	height: 300px;
 }
 
