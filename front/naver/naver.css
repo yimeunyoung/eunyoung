@@ -607,10 +607,12 @@ font-style: normal;
 margin-left: auto; padding: 10px 0; display: block;
 line-height: 1.7rem; 
 }
-
-
-
-
+#container .box-left .box-newsstand .box-top-sub .box-sub-right2 .content-page{
+	display: inline-block; margin: 6px 9px 8px 0;
+	font-size: 1.3rem; line-height: 16px;
+	font-weight: 600; vertical-align: top;
+	color: #606060;
+}
 
 
 
