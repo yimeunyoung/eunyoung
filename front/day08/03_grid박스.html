@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>그리드 예제</title>
+	<style>
+		.grid-container{
+			display: grid;
+			/* 한 줄에 요소를 3개 크기는 1:1:1의 비율로 하고 싶을 경우 
+				grid-template-columns: 1fr 1fr 1fr;로 써주면 됨*/
+			grid-template-columns: repeat(auto-fix, minmax(200px, 1fr)); 
+			grid-template-rows: repeat(3, 100px); /*요소가 늘어나는 것이 아닌 요소가 차지하는 공간이 늘어남*/
+			column-gap: 30px; /* 요소 사이의 간격 */
+			row-gap: 30px; /* 위 아래 간격 설정*/
+		}
+		.box{
+			height: 50px; background-color: yellow;
+		}
+		.box:nth-child(2n){
+			background-color: aliceblue;
+		}
+	</style>
+</head>
+<body>
+	<div class="grid-container">
+		<div class="box">1</div>
+		<div class="box">2</div>
+		<div class="box">3</div>
+		<div class="box">4</div>
+		<div class="box">5</div>
+		<div class="box">6</div>
+	</div>
+</body>
+</html>
