@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>메뉴 예제</title>
+	<style>
+		*{ padding: 0; margin: 0; }
+		ul{	list-style: none; }
+		a{ text-decoration: none; }
+		.list-menu{
+			display: flex;  border: 3px solid black;
+			}
+		.item-menu{
+			width: 100%; height: 50px; 
+		}
+		.link-menu{
+		  display: block; height: 100%; cursor: pointer; color: #000;
+			text-align: center; line-height: 50px; font-size: 30px; 
+		}
+		.item-menu+.item-menu{
+			/* display:flex는 부모의 크기를 넘어가지 않기 때문에 margin-left로 -3px 안빼줘도 됨*/
+			border-left: 3px solid black; 
+		}
+		
+	</style>
+</head>
+<body>
+	<nav>
+		<ul class="list-menu">
+			<li class="item-menu">
+				<a href="#" class="link-menu">메뉴1</a>
+			</li>
+			<li class="item-menu">
+				<a href="#" class="link-menu">메뉴2</a>
+			</li>
+			<li class="item-menu">
+				<a href="#" class="link-menu">메뉴3</a>
+			</li>
+		</ul>
+	</nav>
+</body>
+</html>
