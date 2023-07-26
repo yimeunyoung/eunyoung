@@ -21,7 +21,7 @@
 	<script>
 		// 시작 버튼을 누르면 시계가 동작되도록 
 		// 중지 버튼을 누르면 시계가 멈추도록 코드를 작성하세요.
-		box.innerText = '01:00:00';
+		box.innerText = '00:00:00';
 		let h = 0, m = 0, s= 0;
 		let intervalId = null;
 
@@ -36,7 +36,7 @@
 		});
 
 		function start(){
-				return setInterval(function(){
+			return setInterval(function(){
 			 s++;
 			 if(s == 60){
 				 m++;
@@ -46,10 +46,13 @@
 				 h++;
 				 m = 0;
 			 }
-			 box.inner.getTime(h, m, s);
+			 box.innerText.getTime(h, m, s);
 			}, 1000);
 		 }
 
+		 function stop(id){
+			clearInterval(id);
+		 }
 		 function getTime(h, m, s){
 			return ''+fillZero(h) + ':' + fillZero(m) + ':' + fillZero(s);
 		 }
