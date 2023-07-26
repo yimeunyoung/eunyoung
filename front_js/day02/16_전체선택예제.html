@@ -14,11 +14,11 @@
 	<input type="checkbox" name="check"> 항목3 <br>
 
 	<script>
-	$('[name=all]').click(function(){
-		//전체 선택의 checked 값을 가져옴
-		let checked = $('this').prop('checked');
-		//전체 선택의 checked 값으로 나머지 체크박스를 변경
-		$('[name=check]').prop('checked', checked);
+		$('[name=all]').click(function(){
+			//전체 선택의 checked 값을 가져옴
+			let checked = $(this).prop('checked');
+			//전체 선택의 checked 값으로 나머지 체크박스를 변경
+			$('[name=check]').prop('checked', checked);
 	});	
 	
 	</script>
