@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>박스 추가</title>
+	<script src="../js/jquery.min.js"></script>
+	<style>
+		.box{
+			height: 200px;
+			background-color: pink;
+			position: relative;
+		}
+		.box1{
+			background-color: yellow;
+		}
+		.btn-add{
+			position: absolute; bottom: 10px; right: 10px;
+		}
+		
+	</style>
+</head>
+<body>
+	<div class="box box1">
+		<button class="btn-add">추가</button>
+	</div>
+
+	<script>
+		//클래스명이 btn-add인 요소에 클릭 이벤트를 등록
+		
+		/* 노란색 박스의 버튼만 눌러야 박스가 추가됨
+		$('.btn-add').click(function(){
+			let el = 
+			`<div class="box">
+				<button class="btn-add">추가</button>
+			</div>`;
+			$(this).parent().before(el);
+		});
+		*/
+
+		//분홍색 박스 눌러도 박스 추가됨
+		$(document).on('click','.btn-add',function(){
+			let el = 
+			`<div class="box">
+				<button class="btn-add">추가</button>
+			</div>`;
+			$(this).parent().before(el);
+		});
+
+		/*
+		$('선택자').이벤트명(function(){});
+		$('선택자').on('이벤트명', function(){});
+		$(document).on('이벤트명', '선택자', function(){});
+		*/
+	</script>
+	
+</body>
+</html>
