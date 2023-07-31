@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>요소 추가</title>
+	<script src="../js/jquery.min.js"></script>
+
+</head>
+<body>
+	<button class="btn-add">추가</button>
+	<div class="box"></div>
+	<script>
+		/* append 이용
+		$('.btn-add').click(function(){
+			let input = `<input type="text"><br>`; //아래로 추가하게 하려면 <br> 추가하기
+			$('.box').append(input); //박스 다음에 input을 넣어줌 
+		});
+		*/
+
+		/*before 이용
+		$('.btn-add').click(function(){
+			let input = `<br><input type="text">`;
+			$('.box').before(input); 
+		});
+		*/
+
+		// html 이용
+		$('.btn-add').click(function(){
+			let input = `<input type="text"><br>`;
+			let html = $('.box').html();
+			$('.box').html(html + input);
+		});
+		
+	</script>
+</body>
+</html>
