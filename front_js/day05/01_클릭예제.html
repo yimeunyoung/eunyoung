@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>클릭 예제</title>
+	<script src="../js/jquery.min.js"></script>
+	<style>
+
+	</style>
+</head>
+<body>
+	<div>
+		<button class="btn">버튼</button>
+	</div>
+	<script>
+		/*$(this) 를 사용하는 경우에는 ()=> 함수를 사용하면 안되고 function()을 써야함
+		 단, 그렇지 않을 경우에는 ()=> 함수 or function() 둘 중에 하나 쓰면 됨*/ 
+		$('.btn').click(function(){
+			alert('안녕하세요.');
+		});
+
+		/* 중괄호 생략 가능
+		$('.btn').click(()=>alert('안녕하세요.'));
+		*/
+	</script>
+</body>
+</html>
