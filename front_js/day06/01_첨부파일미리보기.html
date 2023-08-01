@@ -15,7 +15,7 @@
 		<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)">
 	</div>
 	<div class="box-thumbnail">
-		<img src="img_add.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
+		<img src="../day06/img/add_img.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">
 	</div>
 	<script>
 		//이미지를 클릭하면 input태그가 클릭되게하는 이벤트 등록
@@ -52,14 +52,14 @@
 				//선택된 이미지가 3개보다 작은 경우
 				if($('.img-thumbnail').length < 3){
 					$('.box-thumbnail-input').append(`<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)">`);
-					$('.box-thumbnail').append(`<img src="img_add.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
+					$('.box-thumbnail').append(`<img src="../day06/img/add_img.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
 				}
 			} 
 			//첨부파일이 선택되지 않으면
 			else{
 				//+를 눌러서 첨부파일 선택할 때 취소하는 경우
 				if($selectImg.hasClass('img-select')){
-					$selectImg.prop('src', 'img_add.png');
+					$selectImg.prop('src', '../day06/img/add_img.png');
 					return;
 				}
 				//+앞에 이미지를 클릭하여 첨부파일을 열어서 취소하는 경우
@@ -67,7 +67,7 @@
 				$selectInput.remove();
 				if($('.img-select').length == 0){
 					$('.box-thumbnail-input').append(`<input type="file" name="file" class="input-file input-select" onchange="readUrl(this)">`);
-					$('.box-thumbnail').append(`<img src="img_add.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
+					$('.box-thumbnail').append(`<img src="../day06/img/add_img.png" alt="미리보기" class="img-thumbnail img-select" height="100" width="auto">`);
 				}
 			}
 		}
