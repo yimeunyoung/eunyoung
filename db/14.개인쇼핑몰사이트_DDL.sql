@@ -15,18 +15,18 @@ CREATE TABLE `member` (
 	`me_post`	char(5)	NULL,
 	`me_point`	int	NOT NULL DEFAULT 0,
 	`me_authority`	varchar(5)	NOT NULL DEFAULT 'USER',
-    `me_name`  varchar(20) NOT NULL	
+    `me_name` varchar(20) NOT NULL
 );
 
 DROP TABLE IF EXISTS `address`;
 
 CREATE TABLE `address` (
-	`ad_num`	int	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`ad_num`	int	NOT NULL  PRIMARY KEY AUTO_INCREMENT,
 	`ad_name`	varchar(15)	NOT NULL,
 	`ad_addr`	varchar(50)	NOT NULL,
-	`ad_addr_detail`	varchar(50) NOT	NULL,
+	`ad_addr_detail`	varchar(50)	NOT NULL,
 	`ad_post`	char(5)	NOT NULL,
-	`ad_me_id`	varchar(15)	NOT NULL 
+	`ad_me_id`	varchar(15)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `product`;
@@ -35,7 +35,7 @@ CREATE TABLE `product` (
 	`pr_code`	char(6)	NOT NULL PRIMARY KEY,
 	`pr_name`	varchar(20)	NOT NULL,
 	`pr_detail`	longtext	NOT NULL,
-	`pr_price`	int NOT	NULL
+	`pr_price`	int	NOT NULL
 );
 
 DROP TABLE IF EXISTS `option`;
@@ -83,8 +83,8 @@ CREATE TABLE `order_list` (
 	`ol_num`	int	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`ol_amount`	int	NOT NULL,
 	`ol_price`	int	NOT NULL,
-	`or_num`	int	NOT NULL,
-	`op_num`	int	NOT NULL
+	`ol_or_num`	int	NOT NULL,
+	`ol_op_num`	int	NOT NULL
 );
 
 DROP TABLE IF EXISTS `basket`;
@@ -92,7 +92,7 @@ DROP TABLE IF EXISTS `basket`;
 CREATE TABLE `basket` (
 	`ba_num`	int	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`ba_amount`	int	NOT NULL DEFAULT 1,
-	`ba_ol_num`	int	NOT NULL,
+	`ba_me_id`	varchar(15)	NOT NULL,
 	`ba_op_num`	int	NOT NULL
 );
 
@@ -149,24 +149,24 @@ REFERENCES `address` (
 );
 
 ALTER TABLE `order_list` ADD CONSTRAINT `FK_order_TO_order_list_1` FOREIGN KEY (
-	`or_num`
+	`ol_or_num`
 )
 REFERENCES `order` (
 	`or_num`
 );
 
 ALTER TABLE `order_list` ADD CONSTRAINT `FK_option_TO_order_list_1` FOREIGN KEY (
-	`op_num`
+	`ol_op_num`
 )
 REFERENCES `option` (
 	`op_num`
 );
 
-ALTER TABLE `basket` ADD CONSTRAINT `FK_order_list_TO_basket_1` FOREIGN KEY (
-	`ba_ol_num`
+ALTER TABLE `basket` ADD CONSTRAINT `FK_member_TO_basket_1` FOREIGN KEY (
+	`ba_me_id`
 )
-REFERENCES `order_list` (
-	`ol_num`
+REFERENCES `member` (
+	`me_id`
 );
 
 ALTER TABLE `basket` ADD CONSTRAINT `FK_option_TO_basket_1` FOREIGN KEY (
@@ -189,4 +189,3 @@ ALTER TABLE `review` ADD CONSTRAINT `FK_member_TO_review_1` FOREIGN KEY (
 REFERENCES `member` (
 	`me_id`
 );
-
