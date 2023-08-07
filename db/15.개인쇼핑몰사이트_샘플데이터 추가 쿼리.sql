@@ -40,12 +40,11 @@ SET
 WHERE
     OP_PR_CODE = 'ABC001' AND OP_NAME = '무선';
 
--- abc123 회원이 배송지를 다음과 같이 등록(배송지명 : 집, 주소: 서울시 강남구 123번지, 
--- 상세 : KH아파트 101동 101호, 우편번호 : 12345)하는 쿼리
-insert into address(ad_name,ad_addr, ad_addr_detail, ad_post,ad_me_id)
-VALUES('집', '서울시 강남구 123번지', 'KH아파트 101동 101호','12345', 'abc123');
+-- abc123 회원이 배송지를 다음과 같이 등록(배송지명 : 집, 주소: 서울시 강남구 123번지, 우편번호 : 12345)하는 쿼리
+insert into address(ad_name, ad_addr, ad_addr_detail, ad_post, ad_me_id)
+VALUES('집', '서울시 강남구 123번지', '','12345', 'abc123');
 
--- abc회원이 ABC001 제품 중 유선을 3개 장바구니에 담았을 때 쿼리
+-- abc123 회원이 ABC001 제품 중 유선을 3개 장바구니에 담았을 때 쿼리
 insert into basket(ba_amount, ba_me_id, ba_op_num) select 3, 'abc123', op_num from `option` where op_pr_code = 'ABC001' and op_name ='유선';
 -- abc123 회원이 ABC001 제품 중 유선을 1개 장바구니에 담았을 때 쿼리
 UPDATE `basket` 
