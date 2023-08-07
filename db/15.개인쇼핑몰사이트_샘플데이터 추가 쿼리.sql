@@ -201,8 +201,9 @@ select count(*) as 'KH무선마우스 리뷰수' from review
 where 
 	op_pr_code = (select pr_code from product where pr_name = 'KH무선마우스');
 
--- 제품별 리뷰 개수를 조회하는 쿼리
-select op_pr_code as 제품코드, count(*) as 리뷰수 from review
+-- 제품별 리뷰 개수를 조회하는 쿼리(리뷰가 등록된 제품만 조회)
+select 
+	op_pr_code as 제품코드, count(*) as 리뷰수 from review
 	join `option` on re_op_num = op_num 
     group by op_pr_code;
     
