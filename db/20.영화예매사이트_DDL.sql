@@ -13,9 +13,8 @@ CREATE TABLE `movie` (
 	`mo_opening_date`	date	NULL,
 	`mo_running_time`	int not null,
 	`mo_plot`	longtext	not null,
-	`mo_ge_name`	varchar(10)	NOT NULL,
 	`mo_fi_num`	int	NOT NULL,
-	`mo_ag_num`	varchar(10)	NOT NULL,
+	`mo_ag_name`	varchar(10)	NOT NULL,
 	`mo_reservation_rate`	int	not null DEFAULT 0
 );
 
@@ -33,7 +32,7 @@ CREATE TABLE `theater` (
 DROP TABLE IF EXISTS `country`;
 
 CREATE TABLE `country` (
-	`city_name`	varchar(20)	NOT NULL PRIMARY KEY
+	`ct_name`	varchar(20)	NOT NULL PRIMARY KEY
 );
 
 DROP TABLE IF EXISTS `member`;
@@ -43,7 +42,8 @@ CREATE TABLE `member` (
 	`me_pw`	varchar(20)	NOT NULL,
 	`me_name`	varchar(20)	NOT NULL,
 	`me_phone`	varchar(15)	NOT NULL,
-	`me_birthday`	date	NOT NULL
+	`me_birthday`	date	NOT NULL,
+    `me_authority`	varchar(5)	NOT NULL DEFAULT 'USER'
 );
 
 DROP TABLE IF EXISTS `movie_schedule`;
@@ -88,7 +88,7 @@ DROP TABLE IF EXISTS `country_production`;
 
 CREATE TABLE `country_production` (
 	`cp_num`	int	NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`cp_country_name`	varchar(20)	NOT NULL,
+	`cp_ct_name`	varchar(20)	NOT NULL,
 	`cp_mo_num`	int	NOT NULL
 );
 
@@ -96,12 +96,12 @@ DROP TABLE IF EXISTS `film_person`;
 
 CREATE TABLE `film_person` (
 	`fp_num`	int	NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`fp_name`	varchar(10)	NOT NULL,
+	`fp_name`	varchar(50)	NOT NULL,
 	`fp_thumbnail`	varchar(50)	NULL,
 	`fp_agency`	varchar(20)	NULL,
 	`fp_final_education`	varchar(20)	NULL,
 	`fp_birthday`	date	NOT NULL,
-	`fp_city_name`	varchar(20)	NOT NULL
+	`fp_ct_name`	varchar(20)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `role`;
@@ -117,7 +117,7 @@ DROP TABLE IF EXISTS `file`;
 
 CREATE TABLE `file` (
 	`fi_num`	int	NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`fil_name`	varchar(100)	NOT NULL,
+	`fi_name`	varchar(100)	NOT NULL,
 	`fi_state`	varchar(10)	NOT NULL -- 메인포스트/트레일러/스틸컷
 );
 
@@ -132,7 +132,7 @@ CREATE TABLE `movie_file` (
 DROP TABLE IF EXISTS `age`;
 
 CREATE TABLE `age` (
-	`ag_num`	varchar(10)	NOT NULL PRIMARY KEY
+	`ag_name`	varchar(10)	NOT NULL PRIMARY KEY
 );
 
 DROP TABLE IF EXISTS `region`;
@@ -198,13 +198,6 @@ CREATE TABLE `like` (
 );
 
 
-ALTER TABLE `movie` ADD CONSTRAINT `FK_genre_TO_movie_1` FOREIGN KEY (
-	`mo_ge_name`
-)
-REFERENCES `genre` (
-	`ge_name`
-);
-
 ALTER TABLE `movie` ADD CONSTRAINT `FK_file_TO_movie_1` FOREIGN KEY (
 	`mo_fi_num`
 )
@@ -213,10 +206,10 @@ REFERENCES `file` (
 );
 
 ALTER TABLE `movie` ADD CONSTRAINT `FK_age_TO_movie_1` FOREIGN KEY (
-	`mo_ag_num`
+	`mo_ag_name`
 )
 REFERENCES `age` (
-	`ag_num`
+	`ag_name`
 );
 
 ALTER TABLE `theater` ADD CONSTRAINT `FK_region_TO_theater_1` FOREIGN KEY (
@@ -262,10 +255,10 @@ REFERENCES `movie` (
 );
 
 ALTER TABLE `country_production` ADD CONSTRAINT `FK_country_TO_country_production_1` FOREIGN KEY (
-	`cp_country_name`
+	`cp_ct_name`
 )
 REFERENCES `country` (
-	`city_name`
+	`ct_name`
 );
 
 ALTER TABLE `country_production` ADD CONSTRAINT `FK_movie_TO_country_production_1` FOREIGN KEY (
@@ -276,13 +269,13 @@ REFERENCES `movie` (
 );
 
 ALTER TABLE `film_person` ADD CONSTRAINT `FK_country_TO_film_person_1` FOREIGN KEY (
-	`fp_city_name`
+	`fp_ct_name`
 )
 REFERENCES `country` (
-	`city_name`
+	`ct_name`
 );
 
-ALTER TABLE `role` ADD CONSTRAINT `FK_film_person_TO_role_1` FOREIGN KEY (
+ALTER TABLE `role` ADD CONSTRAINT `FK_film_persion_TO_role_1` FOREIGN KEY (
 	`ro_fp_num`
 )
 REFERENCES `film_person` (
