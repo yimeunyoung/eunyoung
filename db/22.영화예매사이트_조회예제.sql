@@ -69,3 +69,18 @@ where rv_me_id = 'abc123'
 group by rv_num;
 
 -- OUTER JOIN : CGV강남 영화관에서 콘크리트 유토피아 20:50에 예매 가능한 좌석을 조회하는 쿼리
+select 
+	se_name as '예매 가능한 좌석'
+from 
+		seat
+		join 
+	screen on sc_num = se_sc_num
+		join 
+	movie_schedule on ms_sc_num = sc_num
+where 
+	ms_num = 8 and se_num not in(
+	select rl_se_num from reservation 
+		join reservation_list on rl_rv_num = rv_num
+		where rv_ms_num = 8
+    );
+
