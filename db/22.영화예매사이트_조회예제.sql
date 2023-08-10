@@ -115,7 +115,130 @@ FROM
 WHERE
 	MS_NUM = 8;
 
+-- !!복습하기 !!! 'abc123' 회원이 관람했던 영화 목록을 조회하는 쿼리
+select mo_title as 관람영화 from reservation 
+    join 
+		movie_schedule on rv_ms_num = ms_num
+    join 
+		movie on ms_mo_num = mo_num 
+where 
+	rv_me_id = 'abc123' and now() >= concat(ms_date, ' ', ms_start_time)
+group by mo_num; -- 같은 영화를 여러번 봐도 관람 영화 목록에는 1번만 출력
 
+-- 예약 가능한 모든 상영 영화 정보를 조회하는 쿼리
+SELECT 
+    MO_TITLE AS 영화제목,
+    MS_DATE AS 상영일,
+	MS_START_TIME AS 상영시간,
+    MO_AG_NAME AS 연령제한
+FROM MOVIE_SCHEDULE
+	JOIN MOVIE ON MO_NUM = MS_MO_NUM
+ -- 스케줄 중에서 현재 시간이 상영시간 이전이어야 예약 가능. CONCAT을 사용하면 '2023-08-16 09:00:00'이 된다
+WHERE
+	 now() < concat(ms_date, ' ', ms_start_time) AND MS_POSSIBLE_SEAT > 0;
 
+-- CGV에서 이벤트로, 한 영화를 여러번 본 회원 중 가장 많이본 회원 3명을 뽑으려고 한다.
+-- 각 영화를 각 회원이 몇 번 봤는지 조회하는 쿼리
+SELECT
+	RV_ME_ID AS 회원아이디,
+    MO_TITLE AS 영화,
+    COUNT(RV_NUM) AS 예약횟수
+FROM RESERVATION
+		JOIN
+	MOVIE_SCHEDULE ON RV_MS_NUM = MS_NUM
+		JOIN
+	MOVIE ON MS_MO_NUM = MO_NUM
+WHERE now() >= concat(ms_date, ' ', ms_start_time)
+GROUP BY RV_ME_ID, MS_MO_NUM;
+    
+-- 회원들 중 금액 사용이 가장 많은 3명의 회원을 조회하는 쿼리
+-- 사용 금액이 같은 회원이 여러명인 경우 누구는 순위에 포함되고 누구는 순위에 포함되지 않을 수 있음
+SELECT 
+    ME_ID AS 아이디,
+    SUM(CASE
+			WHEN NOW() >= CONCAT(MS_DATE, ' ', MS_START_TIME) THEN RV_PRICE
+			ELSE 0
+		END)AS 누적금액
+FROM
+    RESERVATION
+        JOIN
+    MOVIE_SCHEDULE ON RV_MS_NUM = MS_NUM
+        RIGHT JOIN
+    MEMBER ON RV_ME_ID = ME_ID
+GROUP BY RV_ME_ID
+ORDER BY 누적금액 DESC
+LIMIT 3;
+-- 사용 금액이 같은 회원이 여러명인 경우 여러명 모두 등수에 포함되면 모두 받을 수 있다.
+SELECT * FROM (
+	SELECT 
+		ME_ID AS 아이디,
+		누적금액,
+		RANK() OVER(ORDER BY 누적금액 DESC) AS 순위
+	FROM
+		(SELECT *, SUM(CASE
+					WHEN NOW() >= CONCAT(MS_DATE, ' ', MS_START_TIME) THEN RV_PRICE
+					ELSE 0
+				END) AS 누적금액 FROM
+		RESERVATION
+			JOIN
+		MOVIE_SCHEDULE ON RV_MS_NUM = MS_NUM
+			RIGHT JOIN
+		MEMBER ON RV_ME_ID = ME_ID
+		GROUP BY RV_ME_ID
+		) AS A
+	) AS B
+WHERE 순위 <= 3;
 
+-- 영화인별로 배우로 참여한 영화 개수를 조회하는 쿼리
+SELECT FP_NAME AS 영화인,
+	   IFNULL(COUNT(RO_NUM),0) AS '참여영화수(배우)'
+FROM FILM_PERSON
+		LEFT JOIN
+	(SELECT * FROM ROLE WHERE RO_ROLE = '배우') AS ROLE2 ON FP_NUM = RO_FP_NUM
+		JOIN
+	MOVIE ON RO_MO_NUM = MO_NUM
+GROUP BY FP_NUM;
 
+-- 각 스케줄별 예약한 좌석 수를 조회하는 쿼리 SCREEN MOVIE_SCHEDULE
+SELECT 
+		MO_TITLE AS 영화,
+        MS_DATE AS 상영일,
+        MS_START_TIME AS 상영시간,
+	   SC_TOTAL_SEAT - ms_possible_seat AS 예약좌석
+FROM MOVIE_SCHEDULE
+		JOIN
+	SCREEN ON  MS_SC_NUM = SC_NUM
+		JOIN
+	MOVIE ON MO_NUM = MS_MO_NUM;
+
+-- 영화관별 상영 영화목록을 보여주는 쿼리
+SELECT 
+    TH_NAME AS 영화관명,
+    MO_TITLE AS 영화
+FROM
+    MOVIE_SCHEDULE 
+		JOIN
+    SCREEN ON SC_NUM = MS_SC_NUM -- 영화관과 연결을 위해 먼저 상영관과 연결
+		JOIN
+	THEATER ON TH_NUM = SC_TH_NUM -- 영화관명을 조회하기 위해 영화관 연결
+		JOIN
+	MOVIE ON MS_MO_NUM = MO_NUM -- 영화 제목 조회를 위해 영화관 연결
+WHERE
+	NOW() < CONCAT(MS_DATE, ' ', MS_START_TIME) 
+GROUP BY TH_NUM, MS_MO_NUM;
+
+-- 오펜하이머를 상영하는 영화관을 조회하는 쿼리
+SELECT
+    MO_TITLE AS 영화,
+	TH_NAME AS 영화관명
+FROM
+    MOVIE_SCHEDULE 
+		JOIN
+    SCREEN ON SC_NUM = MS_SC_NUM 
+		JOIN
+	THEATER ON TH_NUM = SC_TH_NUM 
+		JOIN
+	MOVIE ON MS_MO_NUM = MO_NUM 
+WHERE
+	NOW() < CONCAT(MS_DATE, ' ', MS_START_TIME) AND MO_TITLE = '오펜하이머'
+GROUP BY TH_NUM;
