@@ -246,7 +246,7 @@ set
 	ms_possible_seat = ms_possible_seat - 2 
 where
 	ms_num = 8;
--- !!! 다시확인하기!!! movie에 예매율을 수정
+-- movie에 예매율을 수정
 UPDATE MOVIE 
 SET 
     MO_RESERVATION_RATE = ROUND(
