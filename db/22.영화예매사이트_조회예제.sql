@@ -168,6 +168,7 @@ FROM
 GROUP BY RV_ME_ID
 ORDER BY 누적금액 DESC
 LIMIT 3;
+-- 회원들 중 금액 사용이 가장 많은 3명의 회원을 조회하는 쿼리 
 -- 사용 금액이 같은 회원이 여러명인 경우 여러명 모두 등수에 포함되면 모두 받을 수 있다.
 SELECT * FROM (
 	SELECT 
