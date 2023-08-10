@@ -96,3 +96,26 @@ FROM
 	RESERVATION_LIST ON SE_NUM = RL_SE_NUM
 WHERE
 	MS_NUM = 8 AND RL_SE_NUM IS NULL;
+    
+--  CGV강남 영화관에서 콘크리트 유토피아 20:50에 있는 좌석들과 좌석들 예매 여부를 조회하는 쿼리
+SELECT 
+	SE_NAME as '좌석 번호',
+    case 
+		when RL_SE_NUM is null then 'Y' -- case when ~ then ~ end는 '조건문'
+		else 'N' 
+	end as '예약 가능 여부'
+FROM
+    SEAT
+        JOIN
+    SCREEN ON SE_SC_NUM = SC_NUM
+		JOIN
+	MOVIE_SCHEDULE ON MS_SC_NUM = SC_NUM
+		LEFT JOIN 
+	RESERVATION_LIST ON SE_NUM = RL_SE_NUM
+WHERE
+	MS_NUM = 8;
+
+
+
+
+
