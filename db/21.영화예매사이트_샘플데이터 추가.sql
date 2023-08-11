@@ -268,3 +268,34 @@ FROM
 	ON RV_MS_NUM = MS_NUM) * 100)
 WHERE
     MO_NUM = 2;
+    
+-- 'abc123' 회원이 콘크리트 유토피아 리뷰를 다음과 같이 작성할 때 쿼리
+-- 콘크리트 유토피아 재미 있어요 
+/* INSERT INTO REVIEW(RE_CONTENT, RE_MO_NUM, RE_ME_ID)
+	VALUES('"콘크리트 유토피아 재미 있어요"', 2, 'abc123'); */
+INSERT INTO REVIEW(RE_CONTENT, RE_MO_NUM, RE_ME_ID)
+	SELECT
+		'콘크리트 유토피아 재미 있어요', 2, 'abc123'
+	FROM 
+		MOVIE
+	WHERE
+		MO_TITLE = '콘크리트 유토피아';
+
+-- abc123회원이 작성한 콘크리트 유토피아 리뷰를 admin회원이 추천을 클릭했을 때 필요한 쿼리
+-- 단, 리뷰번호는 1번인걸 알고 있다고 가정
+-- 1. 추천 테이블에 데이터 추가
+INSERT INTO `LIKE`(LI_ME_ID, LI_RE_NUM) VALUES('admin', 1);
+-- 2. 리뷰 테이블에 추천 수를 업데이트
+UPDATE REVIEW 
+SET RE_TOTAL_LIKE = (SELECT COUNT(*) FROM `LIKE` WHERE LI_RE_NUM = 1)
+WHERE RE_NUM = 1;
+
+-- admin회원이 1번 리뷰를 추천 취소 했을 때 필요한 쿼리
+DELETE FROM `LIKE` WHERE LI_ME_ID = 'admin' AND LI_RE_NUM = 1;
+UPDATE
+	REVIEW
+SET 
+	RE_TOTAL_LIKE = (SELECT COUNT(*) FROM `LIKE` WHERE LI_RE_NUM = 1)
+WHERE 
+	RE_NUM = 1;
+    
