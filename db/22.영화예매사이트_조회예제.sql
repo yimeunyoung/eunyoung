@@ -267,7 +267,7 @@ WHERE
     
 -- 상영 종료된 영화를 조회하는 쿼리(현재 개봉중인 영화는 오늘을 기준으로 2주까지 스케줄이 반드시 등록이 됨)
 SELECT 
-	MO_TITLE, COUNT(MS_NUM)
+	  MO_TITLE AS 상영종료영화
 FROM 
 	MOVIE
 		LEFT JOIN -- 상영 종료된 영화는 상영 정보가 없기 때문에 INNER JOIN을 하면 상영 종료된 영화가 조회되지 않음
