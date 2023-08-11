@@ -252,27 +252,27 @@ SET
     MO_RESERVATION_RATE = ROUND(
     (SELECT 
     SUM(RV_ADULT + RV_TEENAGER)
-FROM
-    RESERVATION
-    JOIN
-		MOVIE_SCHEDULE
-	ON RV_MS_NUM = MS_NUM
-WHERE
-	MS_MO_NUM = 2) / 
+	FROM
+		RESERVATION
+			JOIN
+		MOVIE_SCHEDULE ON RV_MS_NUM = MS_NUM
+	WHERE
+		MS_MO_NUM = 2) / 
     (SELECT 
-    SUM(RV_ADULT + RV_TEENAGER)
-FROM
-    RESERVATION
-    JOIN
-		MOVIE_SCHEDULE
-	ON RV_MS_NUM = MS_NUM) * 100)
+		SUM(RV_ADULT + RV_TEENAGER)
+	FROM
+		RESERVATION
+			JOIN
+		MOVIE_SCHEDULE ON RV_MS_NUM = MS_NUM) * 100)
 WHERE
     MO_NUM = 2;
     
 -- 'abc123' 회원이 콘크리트 유토피아 리뷰를 다음과 같이 작성할 때 쿼리
 -- 콘크리트 유토피아 재미 있어요 
-/* INSERT INTO REVIEW(RE_CONTENT, RE_MO_NUM, RE_ME_ID)
-	VALUES('"콘크리트 유토피아 재미 있어요"', 2, 'abc123'); */
+/* 내가 작성한 쿼리 
+INSERT INTO REVIEW(RE_CONTENT, RE_MO_NUM, RE_ME_ID)
+	VALUES('"콘크리트 유토피아 재미 있어요"', 2, 'abc123'); 
+*/
 INSERT INTO REVIEW(RE_CONTENT, RE_MO_NUM, RE_ME_ID)
 	SELECT
 		'콘크리트 유토피아 재미 있어요', 2, 'abc123'
