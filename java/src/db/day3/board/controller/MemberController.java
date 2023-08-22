@@ -7,6 +7,7 @@ import db.day3.board.service.MemberServiceImp;
 import db.day3.board.vo.MemberVO;
 
 
+
 public class MemberController {
 
 	private MemberService memberService = new MemberServiceImp();
