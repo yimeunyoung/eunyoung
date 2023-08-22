@@ -15,4 +15,4 @@ create user 'test'@localhost identified by '1234';
 모든 작업을 수행할 수 있는 권한을 부여하는 방법
 grant all privileges on DB명.테이블명 to '아이디'@'접근방법';
 */
-grant all privileges on test.* to 'test'@'localhost';
+grant all privileges on cgv.* to 'test'@'localhost';
