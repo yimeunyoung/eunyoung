@@ -30,7 +30,7 @@ public class Signup extends HttpServlet {
 		if(memberService.signup(member)) {
 			ok = true;
 		}
-		request.setAttribute("signupOk", ok);	
+		request.setAttribute("signupOk", ok);
 		doGet(request, response);
 	}
 
