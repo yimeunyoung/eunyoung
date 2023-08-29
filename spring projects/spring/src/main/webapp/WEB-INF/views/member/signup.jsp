@@ -33,7 +33,7 @@
 </nav>
 <div class="container">
 	<h1>회원가입</h1>
-	<form action="<c:url value='/signup'/>" method="post">
+	<form action="<c:url value='/member/signup'/>" method="post">
 		<div class="form-group">
 			<label>아이디</label>
 			<input type="text" class="form-control" name="me_id">
