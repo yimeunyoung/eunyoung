@@ -40,13 +40,13 @@
 		</div>
 		<div class="form-group">
 			<label>비번</label>
-			<input type="text" class="form-control" name="me_pw">
+			<input type="password" class="form-control" name="me_pw">
 		</div>
 		<div class="form-group">
 			<label>이메일</label>
 			<input type="email" class="form-control" name="me_email">
 		</div>
-		<button class="btn btn-outline-warning">회원가입</button>
+		<button class="btn btn-outline-warning col-12">회원가입</button>
 	</form>
 </div>
 </body>
