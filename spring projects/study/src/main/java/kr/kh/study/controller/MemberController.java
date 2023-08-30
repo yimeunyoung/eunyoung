@@ -1,5 +1,7 @@
 package kr.kh.study.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,4 +37,40 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		return "util/message";
 	}
+	
+	@GetMapping("/member/login")
+	public String memberLogin() {
+		return "/member/login";
+	}
+	
+	@PostMapping("/member/login")
+	public String memberLoginPost(Model model, MemberVO member) {
+		String msg , url;
+		MemberVO user = memberService.login(member);
+		
+		if(user != null) {
+			msg = "로그인 성공!";
+			url = "/";
+		}else {
+			msg = "로그인 실패!";
+			url = "/member/login"; 
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		model.addAttribute("user", user);
+		return "util/message"; // 경로 잘 보고 써야함
+	}
+	
+	@GetMapping("/member/logout")
+	public String memberLogout(Model model, HttpSession session) {
+		String msg="로그아웃 성공!", url="/";
+		
+		session.removeAttribute("user");
+		
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		
+		return "/util/message";
+	}
+	
 }
