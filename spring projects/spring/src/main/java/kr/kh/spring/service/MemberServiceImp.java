@@ -17,38 +17,38 @@ public class MemberServiceImp implements MemberService {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
+
 	@Override
 	public boolean signup(MemberVO member) {
 		if(member == null) {
 			return false;
 		}
 		
-		//¾ÆÀÌµğ Áßº¹ È®ÀÎ
+		//ì•„ì´ë”” ì¤‘ë³µ í™•ì¸
 		MemberVO dbMember = memberDao.selectMember(member.getMe_id());
-		//°¡ÀÔÇÏ·Á´Â ¾ÆÀÌµğ°¡ ÀÌ¹Ì °¡ÀÔµÈ °æ¿ì
+		//ê°€ì…í•˜ë ¤ëŠ” ì•„ì´ë””ê°€ ì´ë¯¸ ê°€ì…ëœ ê²½ìš°
 		if(dbMember != null) {
 			return false;
 		}
-		//ºñ¹ø, ÀÌ¸ŞÀÏ null Ã¼Å© + À¯È¿¼º °Ë»ç
-		//¾ÆÀÌµğ´Â ¿µ¹®À¸·Î ½ÃÀÛÇÏ°í, 6~15ÀÚ
+		//ì•„ì´ë””, ë¹„ë²ˆ null ì²´í¬ + ìœ íš¨ì„± ê²€ì‚¬
+		//ì•„ì´ë””ëŠ” ì˜ë¬¸ìœ¼ë¡œ ì‹œì‘í•˜ê³ , 6~15ì
 		String idRegex = "^[a-zA-Z][a-zA-Z0-9]{5,14}$";
-		//ºñ¹øÀº ¿µ¹®, ¼ıÀÚ, !@#$%·Î ÀÌ·ç¾îÁö°í 6~15ÀÚ
+		//ë¹„ë²ˆì€ ì˜ë¬¸,ìˆ«ì,!@#$%ë¡œ ì´ë£¨ì–´ì§€ê³  6~15ì 
 		String pwRegex = "^[a-zA-Z0-9!@#$%]{6,15}$";
 		
-		//¾ÆÀÌµğ°¡ À¯È¿¼º¿¡ ¸ÂÁö ¾ÊÀ¸¸é
+		//ì•„ì´ë””ê°€ ìœ íš¨ì„±ì— ë§ì§€ ì•Šìœ¼ë©´
 		if(!Pattern.matches(idRegex, member.getMe_id())) {
 			return false;
 		}
-		//ºñ¹øÀÌ À¯È¿¼º¿¡ ¸ÂÁö ¾ÊÀ¸¸é
+		//ë¹„ë²ˆì´ ìœ íš¨ì„±ì— ë§ì§€ ì•Šìœ¼ë©´
 		if(!Pattern.matches(pwRegex, member.getMe_pw())) {
 			return false;
 		}
 		
-		//ºñ¹ø ¾ÏÈ£È­
+		//ë¹„ë²ˆ ì•”í˜¸í™” 
 		String encPw = passwordEncoder.encode(member.getMe_pw());
 		member.setMe_pw(encPw);
-		//È¸¿ø°¡ÀÔ
+		//íšŒì›ê°€ì…
 		return memberDao.insertMember(member);
 	}
 
@@ -58,15 +58,17 @@ public class MemberServiceImp implements MemberService {
 			return null;
 		}
 		MemberVO dbMember = memberDao.selectMember(member.getMe_id());
-		//°¡ÀÔµÈ ¾ÆÀÌµğ°¡ ¾Æ´Ï¸é 
+		//ê°€ì…ëœ ì•„ì´ë””ê°€ ì•„ë‹ˆë©´
 		if(dbMember == null) {
 			return null;
 		}
-		//ºñ¹øÈ®ÀÎ
-		//matches(¾ÏÈ£È­¾ÈµÈ¹®ÀÚ¿­, ¾ÏÈ£È­µÈ¹®ÀÚ¿­)
+		//ë¹„ë²ˆí™•ì¸
+		//matches(ì•”í˜¸í™”ì•ˆëœë¬¸ìì—´, ì•”í˜¸í™”ëœë¬¸ìì—´)
 		if(passwordEncoder.matches(member.getMe_pw(), dbMember.getMe_pw())) {
 			return dbMember;
 		}
 		return null;
 	}
+
+	
 }
