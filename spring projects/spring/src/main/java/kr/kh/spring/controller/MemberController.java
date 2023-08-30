@@ -23,35 +23,36 @@ public class MemberController {
 	
 	@RequestMapping(value="/member/signup", method=RequestMethod.GET)
 	public String signup() {
-	
+		
 		return "member/signup";
 	}
 	
 	@RequestMapping(value="/member/signup", method=RequestMethod.POST)
 	public String signupPost(MemberVO member, Model model) {
-		Message msg = new Message("/member/signup", "È¸¿ø°¡ÀÔ¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
-	
+		Message msg = new Message("/member/signup", "íšŒì› ê°€ì…ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+		
 		if(memberService.signup(member)) {
-			msg = new Message("/", "È¸¿ø°¡ÀÔ¿¡ ¼º°øÇß½À´Ï´Ù.");
-		}	
+			msg = new Message("/", "íšŒì› ê°€ì…ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
+		}
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	
 	@GetMapping(value="/member/login")
 	public String memberLogin() {
 		return "member/login";
 	}
 	@PostMapping(value="/member/login")
 	public String memberLoginPost(MemberVO member, Model model) {
-		Message msg = new Message("/member/login", "·Î±×ÀÎ¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
-	
-		MemberVO user = memberService.login(member);
+		Message msg = new Message("/member/login", "ë¡œê·¸ì¸ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+
+		MemberVO user = memberService.login(member); 
 		if(user != null) {
-			msg = new Message("/", "·Î±×ÀÎ¿¡ ¼º°øÇß½À´Ï´Ù.");
+			msg = new Message("/", "ë¡œê·¸ì¸ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
 		}
-			model.addAttribute("user", user);
-			model.addAttribute("msg", msg);
-			return "message";
+		model.addAttribute("user", user);
+		model.addAttribute("msg", msg);
+		return "message";
 	}
 	@GetMapping("/member/logout")
 	public String memberLogout(HttpServletRequest request, Model model) {
@@ -60,9 +61,10 @@ public class MemberController {
 		Message msg = new Message("/", null);
 		if(user != null) {
 			session.removeAttribute("user");
-			msg.setMsg("·Î±×¾Æ¿ô¿¡ ¼º°øÇß½À´Ï´Ù.");
+			msg.setMsg("ë¡œê·¸ì•„ì›ƒì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤.");
 		}
 		model.addAttribute("msg", msg);
 		return "message";
 	}
+	
 }
