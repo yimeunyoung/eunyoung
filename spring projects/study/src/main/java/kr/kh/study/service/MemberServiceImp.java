@@ -43,5 +43,23 @@ public class MemberServiceImp implements MemberService {
 	private boolean checkRegexMember(MemberVO member) {
 		//필요하면 유효성 검사 코드 구현하면 됨
 		return true;
+	}
+
+	@Override
+	public MemberVO login(MemberVO member) {
+		if(member == null || member.getMe_id() == null || member.getMe_pw() == null) {
+			return null;
+		}
+		MemberVO user = memberDao.selectMember(member.getMe_id());
+		//가입된 아이디가 아니면
+		if(user == null) {
+			return null;
+		}
+		//비번확인
+		//matches(암호화안된문자열, 암호화된문자열)
+		if(passwordEncoder.matches(member.getMe_pw(), user.getMe_pw())) {
+			return user;
+		}
+		return null;
 	}	
 }
