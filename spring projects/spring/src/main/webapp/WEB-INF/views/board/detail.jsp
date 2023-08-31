@@ -30,13 +30,13 @@
 		</div>
 	</c:if>
 	<div class="form-group clearfix">
-		<button class="btn btn-outline-primary btn-up col-5 float-left">추천(${board.bo_up})</button>
-		<button class="btn btn-outline-primary btn-up col-5 float-right">비추천(${board.bo_down})</button>
+		<button class="btn btn-outline-primary btn-up col-6 float-left">추천(${board.bo_up })</button>
+		<button class="btn btn-outline-danger btn-up col-6 float-right">비추천(${board.bo_down })</button>
 	</div>
 	<div class="form-group">
 		<label>내용</label>
 		<div class="form-control" style="min-height: 400px">${board.bo_contents}</div>
 	</div>
-	<a href="<c:url value='/board/list'/>" class="btn btn-outline-primary">목록으로</a>
+	<a href="<c:url value='/board/list${cri.currentUrl }'/>" class="btn btn-outline-primary">목록으로</a>
 </body>
 </html>
