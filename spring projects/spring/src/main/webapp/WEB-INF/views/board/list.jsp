@@ -8,30 +8,30 @@
 <body>
 	<h1>게시판</h1>
 	<table class="table table-hover">
-	   <thead>
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>조회수</th>
+        <th>추천/비추천</th>
+      </tr>
+    </thead>
+    <tbody>
+      <c:forEach items="${list }" var="board">
 	      <tr>
-	        <th>번호</th>
-	        <th>제목</th>
-	        <th>작성자</th>
-	        <th>조회수</th>
-	        <th>추천/비추천</th>
+	        <td>${board.bo_num}</td>
+	        <td>
+	        	<a href="<c:url value='/board/detail${pm.cri.currentUrl}&bo_num=${board.bo_num}'/>">${board.bo_title}(${board.bo_comment })</a>
+	        </td>
+	        <td>${board.bo_me_id }</td>
+	        <td>${board.bo_views }</td>
+	        <td>${board.bo_up }/${board.bo_down }</td>
 	      </tr>
-	   </thead>
-	   <tbody>
-	   	  <c:forEach items="${list }" var="board">
-		      <tr>
-		        <td>${board.bo_num }</td>
-		        <td>
-		        	<a href="<c:url value='/board/detail?bo_num=${board.bo_num}'/>">${board.bo_title}(${board.bo_comment})</a>
-		        </td>
-		        <td>${board.bo_me_id }</td>
-		        <td>${board.bo_views}</td>
-		        <td>${board.bo_up}/${board.bo_down}</td>
-		      </tr>
-	      </c:forEach>
-	   </tbody>
-	</table>
-	 <ul class="pagination justify-content-center">
+      </c:forEach>
+    </tbody>
+  </table>
+  <ul class="pagination justify-content-center">
   	<c:if test="${pm.prev}">
 	    <li class="page-item">
 	    	<a class="page-link" href="<c:url value='/board/list${pm.cri.getUrl(pm.startPage-1)}'/>">이전</a>
