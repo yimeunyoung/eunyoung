@@ -14,13 +14,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(
 		HttpServletRequest request,
-		HttpServletResponse response,
+		HttpServletResponse respose,
 		Object handler,
 		ModelAndView mv) {
-			
+		
 		MemberVO user = (MemberVO)mv.getModel().get("user");
 		
-		if(user != null) {
+		if(user != null ) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 		}
