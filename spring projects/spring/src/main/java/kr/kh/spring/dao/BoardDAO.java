@@ -9,7 +9,6 @@ import kr.kh.spring.vo.BoardVO;
 
 public interface BoardDAO {
 
-
 	boolean insertBoard(@Param("board")BoardVO board);
 
 	List<BoardVO> selectBoardList(@Param("cri")Criteria cri);
@@ -19,4 +18,5 @@ public interface BoardDAO {
 	BoardVO selectBoard(@Param("bo_num")Integer bo_num);
 
 	void updateBoardViews(@Param("bo_num")Integer bo_num);
+
 }
