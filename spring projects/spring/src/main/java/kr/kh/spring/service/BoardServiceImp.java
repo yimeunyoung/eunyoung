@@ -21,7 +21,7 @@ public class BoardServiceImp implements BoardService{
 		if(user == null || user.getMe_id() == null) {
 			return false;
 		}
-		if(board == null || board.getBo_title() == null || board.getBo_title().length() == 0) {
+		if(board == null || board.getBo_title()==null || board.getBo_title().length() == 0) {
 			return false;
 		}
 		board.setBo_me_id(user.getMe_id());
@@ -47,9 +47,9 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public BoardVO getBoard(Integer bo_num) {
 		if(bo_num == null) {
-		return null;
-	}
-	return boardDao.selectBoard(bo_num);
+			return null;
+		}
+		return boardDao.selectBoard(bo_num);
 	}
 
 	@Override
