@@ -8,7 +8,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-	let msg = '${msg}';
+	let msg = ${msg};
 
 	if(msg != null | msg.msg != null){
 		alert(msg.msg);
