@@ -9,6 +9,6 @@ public class Message {
 	private String url, msg;
 	
 	public String toString() {
-		return " { " + "msg : '" + msg + "', url : '" + url + "' } ";
+		return "{ " + "msg : '" + msg + "', url : '" + url + "' }";
 	}
 }
