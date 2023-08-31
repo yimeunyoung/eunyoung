@@ -147,7 +147,7 @@
 		    <artifactId>lombok</artifactId>
 		    <version>1.18.24</version>
 		</dependency>
-		<!-- 스프링 시큐리티 -->
+		<!-- 스프링 시큐리티  -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-core</artifactId>
@@ -167,7 +167,8 @@
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-taglibs</artifactId>
 		    <version>${org.springframework-version}</version>
-		</dependency>
+		</dependency>	
+		
 		<!-- Tiles -->
 		<dependency>
 		    <groupId>org.apache.tiles</groupId>
@@ -193,7 +194,7 @@
 		    <groupId>org.apache.tiles</groupId>
 		    <artifactId>tiles-template</artifactId>
 		    <version>${org.apache.tiles-version}</version>
-		</dependency>
+		</dependency>			       
 	</dependencies>
     <build>
         <plugins>
