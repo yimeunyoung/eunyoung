@@ -21,10 +21,10 @@ import kr.kh.spring.vo.MemberVO;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	
+
 	@Autowired
 	BoardService boardService;
-
+	
 	@GetMapping("/list")
 	public String list(Model model, Criteria cri) {
 		cri.setPerPageNum(2);
@@ -34,7 +34,7 @@ public class BoardController {
 		PageMaker pm = new PageMaker(3, cri, totalCount);
 		
 		model.addAttribute("pm", pm);
-		model.addAttribute("list", list);		
+		model.addAttribute("list", list);
 		return "/board/list";
 	}
 	
@@ -42,7 +42,6 @@ public class BoardController {
 	public String insert() {
 		return "/board/insert";
 	}
-
 	@PostMapping("/insert")
 	public String insertPost(BoardVO board, HttpSession session, Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -57,10 +56,12 @@ public class BoardController {
 		return "message";
 	}
 	@GetMapping("/detail")
-	public String detail(Model model, Integer bo_num) {
+	public String detail(Model model, Integer bo_num , Criteria cri) {
 		boardService.updateViews(bo_num);
 		BoardVO board = boardService.getBoard(bo_num);
 		model.addAttribute("board", board);
-		return"/board/detail";
+		model.addAttribute("cri", cri);
+		return "/board/detail";
 	}
+	
 }
