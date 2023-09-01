@@ -44,10 +44,10 @@ public class BoardController {
 		return "/board/insert";
 	}
 	@PostMapping("/insert")
-	public String insertPost(BoardVO board, HttpSession session, Model model, MultipartFile[] files) {
+	public String insertPost(BoardVO board, HttpSession session, Model model, MultipartFile[] fileList) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Message msg;
-		if(boardService.insertBoard(board, user, files)) {
+		if(boardService.insertBoard(board, user, fileList)) {
 			msg = new Message("/board/list", "게시글을 등록했습니다.");
 		}else {
 			msg = new Message("/board/insert", "게시글을 등록하지 못했습니다.");
