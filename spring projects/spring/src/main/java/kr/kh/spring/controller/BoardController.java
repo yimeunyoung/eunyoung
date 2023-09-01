@@ -44,10 +44,10 @@ public class BoardController {
 		return "/board/insert";
 	}
 	@PostMapping("/insert")
-	public String insertPost(BoardVO board, HttpSession session, Model model, MultipartFile[] fileList) {
+	public String insertPost(BoardVO board, HttpSession session, Model model, MultipartFile[] files) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Message msg;
-		if(boardService.insertBoard(board, user, fileList)) {
+		if(boardService.insertBoard(board, user, files)) {
 			msg = new Message("/board/list", "게시글을 등록했습니다.");
 		}else {
 			msg = new Message("/board/insert", "게시글을 등록하지 못했습니다.");
@@ -59,11 +59,10 @@ public class BoardController {
 	public String detail(Model model, Integer bo_num , Criteria cri) {
 		boardService.updateViews(bo_num);
 		BoardVO board = boardService.getBoard(bo_num);
+		//List<FileVO> fileList = boardService.getFileList(bo_num)
 		model.addAttribute("board", board);
 		model.addAttribute("cri", cri);
 		return "/board/detail";
 	}
 	
-	
-
 }
