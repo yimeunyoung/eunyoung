@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.study.vo.BoardVO;
+import kr.kh.study.vo.MemberVO;
 import kr.kh.study.dao.BoardDAO;
 
 @Service
@@ -43,4 +44,49 @@ public class BoardServiceImp implements BoardService {
 		//다오에게 게시글 번호를 주면서 조회수를 1증가 시키라고 요청
 		boardDao.updateBoardViews(bo_num);
 	}
+
+	@Override
+	public boolean insertBoard(BoardVO board, MemberVO user) {
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		if(board == null || board.getBo_title()==null || board.getBo_title().length() == 0) {
+			return false;
+		}
+		board.setBo_me_id(user.getMe_id());
+		boolean res = boardDao.insertBoard(board);
+			return res;
+	}
+
+	@Override
+	public boolean update(BoardVO board, MemberVO user) {
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		if(board == null || board.getBo_title()==null || board.getBo_title().length() == 0) {
+			return false;
+		}
+		BoardVO dbBoard = boardDao.selectBoard(board.getBo_num());
+		if(dbBoard == null || !dbBoard.getBo_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		boolean res = boardDao.updateBoard(board);
+		return res;
+	}
+
+	@Override
+	public boolean deleteBoard(Integer bo_num, MemberVO user) {
+		if(user == null || user.getMe_id() == null) {
+			return false;
+		}
+		if(bo_num == null) {
+			return false;
+		}
+		BoardVO board = boardDao.selectBoard(bo_num);
+		if(board == null || !board.getBo_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		return boardDao.deleteBoard(bo_num);
+	}
+	
 }
