@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.study.vo.BoardVO;
+import kr.kh.study.vo.FileVO;
 
 public interface BoardDAO {
 
@@ -20,5 +21,10 @@ public interface BoardDAO {
 
 	boolean deleteBoard(@Param("bo_num")Integer bo_num);
 
+	void insertFile(@Param("file")FileVO fileVo);
+
+	List<FileVO> selectFileList(@Param("bo_num")Integer bo_num);
+
+	void deleteFile(@Param("fi_num")int fi_num);
 
 }
