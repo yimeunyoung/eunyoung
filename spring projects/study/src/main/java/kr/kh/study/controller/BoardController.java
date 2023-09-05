@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.kh.study.pagination.Criteria;
+import kr.kh.study.pagination.PageMaker;
 import kr.kh.study.service.BoardService;
 import kr.kh.study.vo.BoardVO;
 import kr.kh.study.vo.FileVO;
@@ -23,11 +25,16 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/board/list")
-	public String boardList(Model model) {
+	public String boardList(Model model, Criteria cri) {
+		cri.setPerPageNum(2);
 		//서비스에게 게시글 리스트를 가져오라고 시킴 
-		List<BoardVO> list = boardService.getBoardList();
+		List<BoardVO> list = boardService.getBoardList(cri);
+		int totalCount = boardService.getBoardTotalCount();
+
+		PageMaker pm = new PageMaker(3, cri, totalCount);
 		//가져온 리스트를 화면에 전송 
 		model.addAttribute("list", list);
+		model.addAttribute("pm", pm);
 		return "/board/list";
 	}
 	@GetMapping("/board/detail")
@@ -42,12 +49,10 @@ public class BoardController {
 		model.addAttribute("fileList", fileList);
 		return "/board/detail";
 	}
-	
 	@GetMapping("/board/insert")
 	public String boardInsert() {
 		return "/board/insert";
 	}
-	
 	@PostMapping("/board/insert")
 	public String boardInserPost(Model model, BoardVO board, HttpSession session, MultipartFile[] files) {
 		MemberVO user = (MemberVO) session.getAttribute("user");
@@ -63,17 +68,20 @@ public class BoardController {
 		
 		return "/util/message";
 	}
-	
 	@GetMapping("/board/update")
 	public String boardUpdate(Model model,Integer bo_num) {
 		BoardVO board = boardService.getBoard(bo_num);
+		List<FileVO> fileList = boardService.getFileList(bo_num);
+		
 		model.addAttribute("board", board);
+		model.addAttribute("fileList", fileList);
 		return "/board/update";
 	}
 	@PostMapping("/board/update")
-	public String boardUpdatePost(Model model, BoardVO board, HttpSession session) {
+	public String boardUpdatePost(Model model, BoardVO board, HttpSession session, 
+			MultipartFile[] files, int [] delNums) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		boolean res = boardService.update(board,user);
+		boolean res = boardService.update(board,user, files, delNums);
 		if(res) {
 			model.addAttribute("msg", "게시글을 수정했습니다.");
 		}else {
