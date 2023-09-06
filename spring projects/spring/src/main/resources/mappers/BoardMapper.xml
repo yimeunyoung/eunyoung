@@ -30,11 +30,29 @@
 	</insert>
 	<select id="selectBoardList" resultType="kr.kh.spring.vo.BoardVO">
 		select * from board
+		<choose>
+			<when test='cri.type.equals("0")'>
+				where bo_title like concat('%', #{cri.search}, '%') or
+					bo_contents like concat('%', #{cri.search}, '%')
+			</when>
+		<otherwise>
+			where ${cri.type} like concat('%', #{cri.search}, '%') 			
+		</otherwise>
+		</choose>
 		order by bo_num desc
 		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectBoardCount" resultType="int">
 		select count(*) from board
+		<choose>
+			<when test='cri.type.equals("0")'>
+				where bo_title like concat('%', #{cri.search}, '%') or
+					bo_contents like concat('%', #{cri.search}, '%')
+			</when>
+		<otherwise>
+			where ${cri.type} like concat('%', #{cri.search}, '%') 			
+		</otherwise>
+		</choose>
 	</select>
 	<select id="selectBoard" resultMap="BoardVO">
 		select * from board where bo_num = #{bo_num}
@@ -67,5 +85,16 @@
 	<delete id="deleteBoard">
 		delete from board where bo_num = #{bo_num}
 	</delete>
+	<select id="selectLike" resultType="kr.kh.spring.vo.LikeVO">
+		select * from `like` where li_bo_num = #{li_bo_num} and li_me_id = #{li_me_id}
+	</select>
+	<insert id="insertLike">
+		insert into `like`(li_bo_num, li_me_id, li_state) 
+		values(#{like.li_bo_num},#{like.li_me_id},#{like.li_state})
+	</insert>
+	<update id="updateLike">
+		update `like` set li_state = #{like.li_state} 
+			where li_bo_num = #{like.li_bo_num} and li_me_id = #{like.li_me_id}
+	</update>
 </mapper>
 
