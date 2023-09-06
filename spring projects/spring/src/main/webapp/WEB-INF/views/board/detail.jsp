@@ -31,7 +31,7 @@
 	</c:if>
 	<div class="form-group clearfix">
 		<button class="btn btn-outline-primary btn-up col-6 float-left">추천(${board.bo_up })</button>
-		<button class="btn btn-outline-danger btn-up col-6 float-right">비추천(${board.bo_down })</button>
+		<button class="btn btn-outline-danger btn-down col-6 float-right">비추천(${board.bo_down })</button>
 	</div>
 	<div class="form-group">
 		<label>내용</label>
@@ -56,5 +56,49 @@
 		<a href="<c:url value='/board/update?bo_num=${board.bo_num}'/>" class="btn btn-outline-warning">수정</a>
 		<a href="<c:url value='/board/delete?bo_num=${board.bo_num}'/>" class="btn btn-outline-danger">삭제</a>
 	</c:if>
+	<script type="text/javascript">
+		//추천 버튼을 클릭했을 때 콘솔창에 추천이라고 출력 
+		$('.btn-up').click(()=>{
+			let data = {
+				li_me_id : '${user.me_id}',
+				li_bo_num: '${board.bo_num}',
+				li_state : 1
+			};
+			ajaxJsonToJson(false, 'post', '/board/like', data, (data)=>{
+				if(data.res){
+					alert('추천했습니다.');		
+				}else{
+					alert('추천을 취소했습니다.');
+				}
+			})
+		})
+		//비추천 버튼을 클릭했을 때 콘솔창에 비추천이라고 출력
+		$('.btn-down').click(()=>{
+			let data = {
+				li_me_id : '${user.me_id}',
+				li_bo_num: '${board.bo_num}',
+				li_state : -1
+			};
+			ajaxJsonToJson(false, 'post', '/board/like', data, (data)=>{
+				if(data.res == -1){
+					alert('비추천했습니다.');		
+				}else{
+					alert('비추천을 취소했습니다.');
+				}
+			})
+		})
+		
+		function ajaxJsonToJson(async, type, url, sendObject, successFunc){
+			$.ajax({
+				async : async, 
+				type : type, 
+				url : '<c:url value="/"/>'+url, 
+				data : JSON.stringify(sendObject), 
+				contentType : "application/json; charset=UTF-8", 
+				dataType : "json",
+				success : successFunc
+			});
+		}
+	</script>
 </body>
 </html>
