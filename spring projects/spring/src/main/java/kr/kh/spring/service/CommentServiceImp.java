@@ -27,9 +27,14 @@ public class CommentServiceImp implements CommentService {
 	@Override
 	public List<CommentVO> getCommentList(Criteria cri, int bo_num) {
 		if(cri == null) {
-			cri = new Criteria();
+			cri = new Criteria(); 
 		}
 		return commentDao.selectCommentList(cri, bo_num);
+	}
+
+	@Override
+	public int getTotalCount(int bo_num) {
+		return commentDao.selectCommentCount(bo_num);
 	}
 
 }
