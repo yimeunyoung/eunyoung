@@ -16,7 +16,6 @@
 	<!-- url이 /resources/로 시작하면 webapp/resources폴더에서 찾아서 가져옴  -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/download/**" location="file:///D:/uploadfiles/" />
-	
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<!-- 컨트롤러에서 리턴한 값에 prefix와 sufix를 추가하여 만들어진 결과를 이용하여 view(화면)을 선택함 -->
@@ -44,6 +43,7 @@
 	<beans:bean id="loginInterceptor" class="kr.kh.spring.interceptor.LoginInterceptor"></beans:bean>
 	<beans:bean id="memberInterceptor" class="kr.kh.spring.interceptor.MemberInterceptor"></beans:bean>
 	<beans:bean id="guestInterceptor" class="kr.kh.spring.interceptor.GuestInterceptor"></beans:bean>
+	<beans:bean id="autoLoginInterceptor" class="kr.kh.spring.interceptor.AutoLoginInterceptor"></beans:bean>
 	
 	<interceptors>
 		<interceptor>
@@ -61,15 +61,13 @@
 			<mapping path="/member/signup"/>
 			<beans:ref bean="guestInterceptor" />
 		</interceptor>
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:ref bean="autoLoginInterceptor" />
+		</interceptor>
 	</interceptors>
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="10485760"></beans:property>	
+		<beans:property name="maxUploadSize" value="10485760"/>
 	</beans:bean>
 </beans:beans>
-
-
-
-
-
-
