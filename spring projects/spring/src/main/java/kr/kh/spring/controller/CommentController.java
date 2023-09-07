@@ -28,7 +28,6 @@ public class CommentController {
 		map.put("res", res);
 		return map;
 	}
-	
 	@PostMapping("/comment/list/{bo_num}")
 	public Map<String, Object> list(@RequestBody Criteria cri, @PathVariable("bo_num")int bo_num){
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -37,6 +36,13 @@ public class CommentController {
 		PageMaker pm = new PageMaker(3, cri, totalCount);
 		map.put("list", list);
 		map.put("pm", pm);
+		return map;
+	}
+	@PostMapping("/comment/delete")
+	public Map<String, Object> delete(@RequestBody CommentVO comment){
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean res = commentService.deleteComment(comment);
+		map.put("res", res);
 		return map;
 	}
 	
