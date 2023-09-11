@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.spring.dao.BoardDAO;
 import kr.kh.spring.pagination.Criteria;
 import kr.kh.spring.util.UploadFileUtils;
+import kr.kh.spring.vo.BoardTypeVO;
 import kr.kh.spring.vo.BoardVO;
 import kr.kh.spring.vo.FileVO;
 import kr.kh.spring.vo.LikeVO;
@@ -146,14 +147,14 @@ public class BoardServiceImp implements BoardService{
 			return false;
 		}
 		BoardVO board = boardDao.selectBoard(bo_num);
-		//없는 게시글이거나 작성자가 아니면
+		//없는 게시글이거나 작성자가 아니면 
 		if(board == null || !board.getBo_me_id().equals(user.getMe_id())) {
 			return false;
 		}
 		//첨부파일 삭제
 		List<FileVO> fileList = board.getFileVoList();
 		deleteFile(fileList);
-		//게시글 삭제
+		//게시글 삭제 
 		boardDao.deleteBoard(bo_num);
 		return true;
 	}
@@ -164,7 +165,7 @@ public class BoardServiceImp implements BoardService{
 		}
 		//List<FileVO> => Integer[]
 		Integer [] nums = new Integer[fileList.size()];
-		for(int i = 0 ; i<nums.length; i++) {
+		for(int i = 0; i<nums.length; i++) {
 			nums[i] = fileList.get(i).getFi_num();
 		}
 		deleteFile(nums);
@@ -202,14 +203,75 @@ public class BoardServiceImp implements BoardService{
 		}
 		return boardDao.selectLike(bo_num, user.getMe_id());
 	}
+
+	@Override
+	public List<BoardTypeVO> getBoardTypeList() {
+		return boardDao.selectBoardTypeList();
+	}
+
+	@Override
+	public boolean insertBoardType(BoardTypeVO boardType) {
+		if(boardType == null || boardType.getBt_title() == null || boardType.getBt_authority() == null) {
+			return false;
+		}
+		//게시판명이 중복되는걸 방지하기 위해
+		try {
+			boolean res = boardDao.insertBoardType(boardType);
+			if(!res) {
+				return false;
+			}
+		}catch(Exception e) {
+			return false;
+		}
+		switch (boardType.getBt_authority()) {
+		case "USER":
+			boardDao.insertBoardAuthority(boardType.getBt_num(), "USER");
+		case "ADMIN":
+			boardDao.insertBoardAuthority(boardType.getBt_num(), "ADMIN");
+			break;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean deleteBoardType(BoardTypeVO boardType) {
+		if(boardType == null) {
+			return false;
+		}
+		//등록된 게시글이 있는지 확인 
+		int count = boardDao.selectBoardCountByBoardType(boardType.getBt_num());
+		//있으면 삭제 실패
+		if(count != 0) {
+			return false;
+		}
+		//등록된 게시판 타입이 몇개 있는지 확인
+		int btCount = boardDao.selectBoardTypeCount();
+		
+		//1개 있으면 삭제 실패 
+		if(btCount == 1) {
+			return false;
+		}
+		//게시판 타입을 삭제
+		return boardDao.deleteBoardType(boardType.getBt_num());
+	}
+
+	@Override
+	public boolean updateBoardType(BoardTypeVO boardType) {
+		if(boardType == null || boardType.getBt_title() == null) {
+			return false;
+		}
+		try {
+			return boardDao.updateBoardType(boardType);
+		}catch(Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public List<BoardTypeVO> getBoardTypeList(MemberVO user) {
+		if(user == null || user.getMe_role() == null) {
+			return null;
+		}
+		return boardDao.selectBoardTypeListByRole(user.getMe_role());
+	}
 }
-
-
-
-
-
-
-
-
-
-
