@@ -12,6 +12,14 @@
 	<form action="<c:url value='/board/insert'/>" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="bo_ori_num" value="${bo_ori_num}">
 		<div class="form-group">
+			<label>게시판명</label>
+			<select class="form-control" name="bo_bt_num">
+				<c:forEach items="${typeList}" var="type">
+					<option value="${type.bt_num }">${type.bt_title }</option>
+				</c:forEach>
+			</select>
+		</div>
+		<div class="form-group">
 			<label>제목</label>
 			<input type="text" class="form-control" name="bo_title">
 		</div>
@@ -33,7 +41,11 @@
 	</form>
 	
 	<script>
-      $('#summernote').summernote({
+	if(${typeList.size()} == 0){
+		alert('작성 가능한 게시판이 없습니다.');
+		location.href = '<c:url value="/board/list"/>'
+	}
+	$('#summernote').summernote({
         placeholder: '내용을 입력하세요.',
         tabsize: 2,
         height: 400
