@@ -8,8 +8,11 @@ public interface MemberDAO {
 
 	MemberVO selectMember(@Param("me_id")String me_id);
 
-	boolean insertMember(@Param("m")MemberVO member); //member를 줄여서 m으로 씀
+	boolean insertMember(@Param("m")MemberVO member);
 
+	void updateMemberSession(@Param("user")MemberVO user);
+
+	MemberVO selectMemberBySession(@Param("me_session_id")String me_session_id);
 
 
 }
