@@ -8,9 +8,9 @@
 		values(#{comment.co_me_id},#{comment.co_bo_num},#{comment.co_contents})
 	</insert>
 	<select id="selectCommentList" resultType="kr.kh.study.vo.CommentVO">
-		select
-			*
-		from
+		select 
+			* 
+		from 
 			comment
 		where
 			co_bo_num = #{bo_num}
@@ -18,11 +18,17 @@
 		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	<select id="selectCommentCount" resultType="int">
-		select
-			count(*)
-		from
+		select 
+			count(*) 
+		from 
 			comment
 		where
 			co_bo_num = #{bo_num}
 	</select>
+	<select id="selectComment" resultType="kr.kh.study.vo.CommentVO">
+		select * from comment where co_num = #{co_num}
+	</select>
+	<delete id="deleteComment">
+		delete from comment where co_num = #{co_num}
+	</delete>
 </mapper>
