@@ -114,6 +114,7 @@
 						</li>`
 					}
 					$('.comment-list').html(str);
+					
 					let pm = data.pm;
 					str = '';
 					//이전버튼을 배치
@@ -126,17 +127,15 @@
 					}
 					//다음버튼을 배치
 					if(pm.next){
-						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.startPage+1})"> 다음</a>`;
+						str += `<a href="javascript:void(0);" onclick="changePage(\${pm.endPage+1})"> 다음</a>`
 					}
 					$('.pagination').html(str);
-					console.log(pm)
 				}
-			})
+			});
 		}
 		function changePage(page){
 			cri.page = page;
 			getCommentList(cri);
-			
 		}
 	</script>
 </body>
