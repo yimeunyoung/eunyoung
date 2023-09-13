@@ -37,12 +37,10 @@ public class MemberController {
 		model.addAttribute("msg", msg);
 		return "util/message";
 	}
-	
 	@GetMapping("/member/login")
 	public String memberLogin() {
 		return "/member/login";
 	}
-	
 	@PostMapping("/member/login")
 	public String memberLoginPost(Model model, MemberVO member) {
 		String msg , url;
@@ -59,19 +57,21 @@ public class MemberController {
 		model.addAttribute("url", url);
 		model.addAttribute("msg", msg);
 		model.addAttribute("user", user);
-		return "util/message"; // 경로 잘 보고 써야함
+		return "util/message";
 	}
-	
 	@GetMapping("/member/logout")
 	public String memberLogout(Model model, HttpSession session) {
-		String msg="로그아웃 성공!", url="/";
-		
+		String msg="로그아웃 성공!" , url="/";
+	
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		user.setMe_session_limit(null);
+		memberService.updateMemberSesseion(user);
 		session.removeAttribute("user");
+	
 		
 		model.addAttribute("url", url);
 		model.addAttribute("msg", msg);
-		
+
 		return "/util/message";
 	}
-	
 }
