@@ -2,15 +2,20 @@ package kr.kh.edu.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.edu.pagination.Criteria;
 import kr.kh.edu.pagination.PageMaker;
 import kr.kh.edu.service.BoardService;
 import kr.kh.edu.vo.BoardVO;
+import kr.kh.edu.vo.MemberVO;
 
 @Controller
 public class BoardController {
@@ -34,5 +39,23 @@ public class BoardController {
 		model.addAttribute("title", "게시글 조회");
 		model.addAttribute("pm", pm);
 		return "/board/list";
+	}
+	@GetMapping("/board/insert")
+	public String insert() {
+		return "/board/insert";
+	}
+	@PostMapping("/board/insert")
+	public String insertPost(Model model, BoardVO board, HttpSession session, 
+			MultipartFile [] fileList) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		boolean res = boardService.insertBoard(board, user, fileList);
+		if(res) {
+			model.addAttribute("msg", "게시글 등록 성공!");
+			model.addAttribute("url", "board/list");
+		}else {
+			model.addAttribute("msg", "게시글 등록 실패!");
+			model.addAttribute("url", "board/insert");
+		}
+		return "/main/message";
 	}
 }
