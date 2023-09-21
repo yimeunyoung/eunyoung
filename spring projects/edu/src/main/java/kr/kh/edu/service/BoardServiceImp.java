@@ -80,4 +80,15 @@ public class BoardServiceImp implements BoardService {
 		
 		return true;
 	}
+
+	@Override
+	public BoardVO getBoard(int num) {
+		//int는 예외처리 할필요 없이 바로 dao에게 바로 일 시켜도 됨
+		return boardDao.selectBoard(num);
+	}
+
+	@Override
+	public List<FileVO> getFileList(int num) {
+		return boardDao.selectFileList(num);
+	}
 }
