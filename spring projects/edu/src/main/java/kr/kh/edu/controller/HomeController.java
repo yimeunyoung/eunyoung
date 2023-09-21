@@ -65,4 +65,6 @@ public class HomeController {
 		member.setMe_pw(pw);
 		return member;
 	}
+	
+	
 }
