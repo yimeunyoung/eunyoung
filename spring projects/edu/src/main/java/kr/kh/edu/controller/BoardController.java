@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ import kr.kh.edu.pagination.Criteria;
 import kr.kh.edu.pagination.PageMaker;
 import kr.kh.edu.service.BoardService;
 import kr.kh.edu.vo.BoardVO;
+import kr.kh.edu.vo.FileVO;
 import kr.kh.edu.vo.MemberVO;
 
 @Controller
@@ -58,4 +60,21 @@ public class BoardController {
 		}
 		return "/main/message";
 	}
+	@GetMapping("/board/detail/{bo_num}")
+	public String detail(Model model, @PathVariable("bo_num")int num) {
+		BoardVO board = boardService.getBoard(num);
+		//System.out.println(num);
+		//게시글 번호 줄테니 게시글에 맞는 첨부파일 가져오도록 시킴
+		List<FileVO> fileList = boardService.getFileList(num);
+		model.addAttribute("board", board);
+		model.addAttribute("fileList", fileList);
+		return "/board/detail";
+	}
+	
+	
 }
+
+
+
+
+
