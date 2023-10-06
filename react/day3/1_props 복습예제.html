@@ -23,12 +23,15 @@
 
 			} 
 			*/
+
+			//첫 번째 방법
 			const Btn1 = () => <button>버튼1</button>
 			const Btn2 = () => <button>버튼2</button>
 			const Btn3 = () => <button>버튼3</button>
 			const Btn4 = () => <button>버튼4</button>
 			const Btn5 = () => <button>버튼5</button>
 				
+			//두 번째 방법
 			function Btn({text, color, fontSize}){
 				//console.log(color)
 				return(
@@ -37,6 +40,7 @@
 						>{text}</button>
 				)
 			}
+			
 			function App(){
 				return (
 					<div>
